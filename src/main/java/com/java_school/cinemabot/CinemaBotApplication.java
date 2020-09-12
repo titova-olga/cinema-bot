@@ -1,25 +1,35 @@
 package com.java_school.cinemabot;
 
+import com.java_school.cinemabot.services.DatabaseFilmServiceImpl;
+import com.java_school.cinemabot.model.Film;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.springframework.context.ConfigurableApplicationContext;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+import java.util.List;
+
+@SpringBootApplication//(exclude = {DataSourceAutoConfiguration.class })
 public class CinemaBotApplication {
 
-    @Bean
+    /*@Bean
     public TelegramBotsApi telegramBotsApi(){
         return new TelegramBotsApi();
     }
+    */
 
     @SneakyThrows
     public static void main(String[] args) {
-        ApiContextInitializer.init();
-        SpringApplication.run(CinemaBotApplication.class, args);
+        //ApiContextInitializer.init();
+        //SpringApplication.run(CinemaBotApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(CinemaBotApplication.class, args);
+        DatabaseFilmServiceImpl filmService = context.getBean(DatabaseFilmServiceImpl.class);
+
+        filmService.saveFilms();
+
+        List<Film> allFilms = filmService.getAllFilms();
+        for (Film film : allFilms) {
+            System.out.println(film);
+        }
     }
 }

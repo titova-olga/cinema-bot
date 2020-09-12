@@ -13,7 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.User;
 
 import javax.annotation.PostConstruct;
 
-@Component
+//@Component
 public class TelegramBot extends TelegramLongPollingBot {
 
     @Value("${bot.username}")
