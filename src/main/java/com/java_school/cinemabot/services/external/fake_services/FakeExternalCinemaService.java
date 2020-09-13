@@ -1,7 +1,7 @@
-package com.java_school.cinemabot.services.external;
+package com.java_school.cinemabot.services.external.fake_services;
 
-import com.java_school.cinemabot.model.Cinema;
-import com.java_school.cinemabot.model.CinemaNetwork;
+import com.java_school.cinemabot.services.external.ExternalCinemaService;
+import com.java_school.cinemabot.services.external.model.ExternalCinema;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

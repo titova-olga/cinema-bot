@@ -6,7 +6,7 @@ import com.java_school.cinemabot.model.Session;
 import com.java_school.cinemabot.repo.CinemaRepo;
 import com.java_school.cinemabot.repo.FilmRepo;
 import com.java_school.cinemabot.repo.SessionRepo;
-import com.java_school.cinemabot.services.external.ExternalSession;
+import com.java_school.cinemabot.services.external.model.ExternalSession;
 import com.java_school.cinemabot.services.external.ExternalSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +50,7 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
     public void saveSessions() {
         List<ExternalSession> sessions = externalSessionService.getSessions();
         for (ExternalSession session : sessions) {
+            // todo: more complicated logic
             Cinema cinema = cinemaRepo.getCinemaByName(session.getCinemaName());
             Film film = filmRepo.getFilmByName(session.getFilmName());
             sessionRepo.save(Session.builder()

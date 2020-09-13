@@ -1,6 +1,6 @@
 package com.java_school.cinemabot.services.external;
 
-import com.java_school.cinemabot.model.Cinema;
+import com.java_school.cinemabot.services.external.model.ExternalCinema;
 
 import java.util.List;
 

@@ -1,7 +1,8 @@
-package com.java_school.cinemabot.services.external;
+package com.java_school.cinemabot.services.external.fake_services;
 
 import com.github.javafaker.Faker;
 import com.java_school.cinemabot.model.Film;
+import com.java_school.cinemabot.services.external.ExternalFilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

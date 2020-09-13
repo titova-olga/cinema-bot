@@ -1,4 +1,4 @@
-package com.java_school.cinemabot.services.external;
+package com.java_school.cinemabot.services.external.model;
 
 import lombok.Builder;
 import lombok.Data;

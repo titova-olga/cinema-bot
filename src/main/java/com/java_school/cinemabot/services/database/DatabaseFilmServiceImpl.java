@@ -32,6 +32,10 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
     @Override
     @Transactional
     public void saveFilms() {
-        filmRepo.saveAll(externalFilmService.getFilmsFromWebSites());
+        List<Film> films = externalFilmService.getFilmsFromWebSites();
+        //todo: more complicated logic
+        films.stream()
+                .filter(film -> filmRepo.getFilmByName(film.getName()) == null)
+                .forEach(film -> filmRepo.save(film));
     }
 }

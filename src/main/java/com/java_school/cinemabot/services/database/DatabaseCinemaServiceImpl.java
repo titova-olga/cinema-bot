@@ -4,7 +4,7 @@ import com.java_school.cinemabot.model.Cinema;
 import com.java_school.cinemabot.model.CinemaNetwork;
 import com.java_school.cinemabot.repo.CinemaNetworkRepo;
 import com.java_school.cinemabot.repo.CinemaRepo;
-import com.java_school.cinemabot.services.external.ExternalCinema;
+import com.java_school.cinemabot.services.external.model.ExternalCinema;
 import com.java_school.cinemabot.services.external.ExternalCinemaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
