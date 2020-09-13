@@ -7,9 +7,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.util.List;
 
-@SpringBootApplication//(exclude = {DataSourceAutoConfiguration.class })
+@SpringBootApplication
 public class CinemaBotApplication {
 
     /*@Bean
@@ -23,6 +25,7 @@ public class CinemaBotApplication {
         //ApiContextInitializer.init();
         //SpringApplication.run(CinemaBotApplication.class, args);
         ConfigurableApplicationContext context = SpringApplication.run(CinemaBotApplication.class, args);
+
         DatabaseFilmServiceImpl filmService = context.getBean(DatabaseFilmServiceImpl.class);
 
         filmService.saveFilms();
@@ -31,5 +34,7 @@ public class CinemaBotApplication {
         for (Film film : allFilms) {
             System.out.println(film);
         }
+
+        context.close();
     }
 }

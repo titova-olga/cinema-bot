@@ -17,6 +17,5 @@ public class Cinema {
     private String address;
 
     @ManyToOne
-    //@JoinColumn(name="id")
     private CinemaNetwork cinemaNetwork;
 }
