@@ -1,4 +1,4 @@
-package com.java_school.cinemabot.services;
+package com.java_school.cinemabot.services.external;
 
 import com.github.javafaker.Faker;
 import com.java_school.cinemabot.model.Film;
@@ -30,7 +30,7 @@ public class FakeExternalFilmService implements ExternalFilmService {
                 .producer(faker.book().author())
                 .minAge(faker.number().numberBetween(0, 18))
                 .rating(faker.number().numberBetween(0, 5))
-                .releaseDate(faker.date().future(20, TimeUnit.DAYS).toInstant()
+                .releaseDate(faker.date().past(100, TimeUnit.DAYS).toInstant()
                                                                             .atZone(ZoneId.systemDefault())
                                                                             .toLocalDate())
                 .build();

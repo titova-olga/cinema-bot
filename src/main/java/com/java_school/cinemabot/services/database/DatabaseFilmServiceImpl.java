@@ -1,7 +1,8 @@
-package com.java_school.cinemabot.services;
+package com.java_school.cinemabot.services.database;
 
 import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.repo.FilmRepo;
+import com.java_school.cinemabot.services.external.ExternalFilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,13 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
     }
 
     @Override
+    public List<Film> getFilmsByGenre(String genre) {
+        return filmRepo.findFilmsByGenre(genre);
+    }
+
+    @Override
     @Transactional
     public void saveFilms() {
-        externalFilmService.getFilmsFromWebSites().forEach(film -> filmRepo.save(film));
+        filmRepo.saveAll(externalFilmService.getFilmsFromWebSites());
     }
 }
