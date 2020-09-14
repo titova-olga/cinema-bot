@@ -7,5 +7,5 @@ import java.util.List;
 public interface DatabaseFilmService {
     List<Film> getAllFilms();
     List<Film> getFilmsByGenre(String genre);
-    void saveFilms();
+    void saveFilms(List<Film> films);
 }

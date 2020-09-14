@@ -2,7 +2,7 @@ package com.java_school.cinemabot.services.database;
 
 import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.repo.FilmRepo;
-import com.java_school.cinemabot.services.external.ExternalFilmService;
+import com.java_school.cinemabot.services.external.DTOFilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +14,6 @@ import java.util.List;
 public class DatabaseFilmServiceImpl implements DatabaseFilmService {
     @Autowired
     private FilmRepo filmRepo;
-
-    @Autowired
-    private ExternalFilmService externalFilmService;
 
     @Override
     @Transactional
@@ -31,8 +28,7 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
 
     @Override
     @Transactional
-    public void saveFilms() {
-        List<Film> films = externalFilmService.getFilmsFromWebSites();
+    public void saveFilms(List<Film> films) {
         //todo: more complicated logic
         films.stream()
                 .filter(film -> filmRepo.getFilmByName(film.getName()) == null)

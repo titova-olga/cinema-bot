@@ -8,7 +8,7 @@ import java.time.LocalTime;
 
 @Data
 @Builder
-public class ExternalSession {
+public class SessionDTO {
     private String filmName;
     private String cinemaName;
     private LocalDate date;

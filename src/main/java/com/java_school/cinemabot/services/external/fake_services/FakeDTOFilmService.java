@@ -2,7 +2,7 @@ package com.java_school.cinemabot.services.external.fake_services;
 
 import com.github.javafaker.Faker;
 import com.java_school.cinemabot.model.Film;
-import com.java_school.cinemabot.services.external.ExternalFilmService;
+import com.java_school.cinemabot.services.external.DTOFilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  * Fake external film service generates fake films before we implement real service
  * */
 @Service
-public class FakeExternalFilmService implements ExternalFilmService {
+public class FakeDTOFilmService implements DTOFilmService {
 
     private final int FILMS_AMOUNT = 10;
 

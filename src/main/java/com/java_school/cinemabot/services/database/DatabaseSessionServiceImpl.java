@@ -6,8 +6,7 @@ import com.java_school.cinemabot.model.Session;
 import com.java_school.cinemabot.repo.CinemaRepo;
 import com.java_school.cinemabot.repo.FilmRepo;
 import com.java_school.cinemabot.repo.SessionRepo;
-import com.java_school.cinemabot.services.external.model.ExternalSession;
-import com.java_school.cinemabot.services.external.ExternalSessionService;
+import com.java_school.cinemabot.services.external.model.SessionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +25,8 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
     @Autowired
     private FilmRepo filmRepo;
 
-    @Autowired
-    private ExternalSessionService externalSessionService;
+    //@Autowired
+    //private ExternalSessionService externalSessionService;
 
     @Override
     public List<Session> getSessionByCinema(String cinema) {
@@ -47,9 +46,9 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
 
     @Override
     @Transactional
-    public void saveSessions() {
-        List<ExternalSession> sessions = externalSessionService.getSessions();
-        for (ExternalSession session : sessions) {
+    public void saveSessions(List<SessionDTO> sessions) {
+        //List<ExternalSession> sessions = externalSessionService.getSessions();
+        for (SessionDTO session : sessions) {
             // todo: more complicated logic
             Cinema cinema = cinemaRepo.getCinemaByName(session.getCinemaName());
             Film film = filmRepo.getFilmByName(session.getFilmName());

@@ -24,6 +24,6 @@ public class Cinema {
     private String address;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn
+    //@JoinColumn
     private CinemaNetwork cinemaNetwork;
 }

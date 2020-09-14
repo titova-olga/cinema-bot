@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ExternalCinema {
+public class CinemaDTO {
     private String name;
     private String address;
     private String networkName;

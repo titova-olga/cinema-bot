@@ -27,6 +27,13 @@ public class Session {
     @ManyToOne
     private Film film;
 
-    private LocalDate date;
+    //@Transient
+    //@Temporal(TemporalType.TIMESTAMP)
+    private LocalDate date; // Date
     private LocalTime time;
+
+    @PrePersist // preload listener - back from database
+    protected void calculateLocalDate() {
+        // calculate date for database
+    }
 }

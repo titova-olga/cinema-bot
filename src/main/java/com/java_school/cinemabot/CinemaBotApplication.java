@@ -5,6 +5,9 @@ import com.java_school.cinemabot.services.database.DatabaseCinemaService;
 import com.java_school.cinemabot.services.database.DatabaseFilmService;
 import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.services.database.DatabaseSessionService;
+import com.java_school.cinemabot.services.external.DTOCinemaService;
+import com.java_school.cinemabot.services.external.DTOFilmService;
+import com.java_school.cinemabot.services.external.DTOSessionService;
 import lombok.SneakyThrows;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,9 +34,9 @@ public class CinemaBotApplication {
         DatabaseCinemaService cinemaService = context.getBean(DatabaseCinemaService.class);
         DatabaseSessionService sessionService = context.getBean(DatabaseSessionService.class);
 
-        filmService.saveFilms();
-        cinemaService.saveCinemas();
-        sessionService.saveSessions();
+        filmService.saveFilms(context.getBean(DTOFilmService.class).getFilmsFromWebSites());
+        cinemaService.saveCinemas(context.getBean(DTOCinemaService.class).getExistingCinemas());
+        sessionService.saveSessions(context.getBean(DTOSessionService.class).getSessions());
 
         List<Film> allFilms = filmService.getAllFilms();
         for (Film film : allFilms) {
