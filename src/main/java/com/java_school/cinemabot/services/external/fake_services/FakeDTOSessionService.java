@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Service
+//@Service
 public class FakeDTOSessionService implements DTOSessionService {
     private static final long SESSIONS_AMOUNT = 10;
 

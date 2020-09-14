@@ -3,6 +3,7 @@ package com.java_school.cinemabot.services;
 import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.services.database.impl.DatabaseFilmServiceImpl;
 import com.java_school.cinemabot.services.external.fake_services.FakeDTOFilmService;
+import com.java_school.cinemabot.services.external.model.FilmDTO;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +33,7 @@ class DatabaseFilmServiceImplTest {
         given(externalFilmService.getFilmsFromWebSites()).willReturn(
                 Stream.iterate(1, i -> ++i)
                         .limit(10)
-                        .map(a -> Film.builder().build())
+                        .map(a -> FilmDTO.builder().build())
                         .collect(Collectors.toList())
         );
 

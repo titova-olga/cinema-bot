@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+//@Service
 public class FakeDTOCinemaService implements DTOCinemaService {
     @Override
     public List<CinemaDTO> getExistingCinemas() {

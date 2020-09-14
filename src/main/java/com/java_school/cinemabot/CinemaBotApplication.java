@@ -22,7 +22,7 @@ public class CinemaBotApplication {
     @SneakyThrows
     public static void main(String[] args) {
         ApiContextInitializer.init();
-        SpringApplication.run(CinemaBotApplication.class, args);
+        //SpringApplication.run(CinemaBotApplication.class, args);
         ConfigurableApplicationContext context = SpringApplication.run(CinemaBotApplication.class, args);
 
         DatabaseFilmService filmService = context.getBean(DatabaseFilmService.class);
