@@ -1,7 +1,7 @@
 package com.java_school.cinemabot.services;
 
 import com.java_school.cinemabot.model.Film;
-import com.java_school.cinemabot.services.database.DatabaseFilmServiceImpl;
+import com.java_school.cinemabot.services.database.impl.DatabaseFilmServiceImpl;
 import com.java_school.cinemabot.services.external.fake_services.FakeDTOFilmService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

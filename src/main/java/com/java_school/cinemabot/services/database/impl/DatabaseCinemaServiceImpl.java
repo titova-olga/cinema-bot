@@ -1,9 +1,10 @@
-package com.java_school.cinemabot.services.database;
+package com.java_school.cinemabot.services.database.impl;
 
 import com.java_school.cinemabot.model.Cinema;
 import com.java_school.cinemabot.model.CinemaNetwork;
 import com.java_school.cinemabot.repo.CinemaNetworkRepo;
 import com.java_school.cinemabot.repo.CinemaRepo;
+import com.java_school.cinemabot.services.database.DatabaseCinemaService;
 import com.java_school.cinemabot.services.external.model.CinemaDTO;
 import com.java_school.cinemabot.services.external.DTOCinemaService;
 import org.springframework.beans.factory.annotation.Autowired;

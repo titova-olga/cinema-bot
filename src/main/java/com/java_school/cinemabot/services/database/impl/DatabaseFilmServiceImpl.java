@@ -1,7 +1,8 @@
-package com.java_school.cinemabot.services.database;
+package com.java_school.cinemabot.services.database.impl;
 
 import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.repo.FilmRepo;
+import com.java_school.cinemabot.services.database.DatabaseFilmService;
 import com.java_school.cinemabot.services.external.DTOFilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

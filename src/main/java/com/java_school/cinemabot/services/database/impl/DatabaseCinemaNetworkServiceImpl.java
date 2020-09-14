@@ -1,7 +1,8 @@
-package com.java_school.cinemabot.services.database;
+package com.java_school.cinemabot.services.database.impl;
 
 import com.java_school.cinemabot.model.CinemaNetwork;
 import com.java_school.cinemabot.repo.CinemaNetworkRepo;
+import com.java_school.cinemabot.services.database.DatabaseCinemaNetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

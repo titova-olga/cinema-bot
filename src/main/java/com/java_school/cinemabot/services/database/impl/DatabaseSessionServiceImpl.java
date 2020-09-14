@@ -1,4 +1,4 @@
-package com.java_school.cinemabot.services.database;
+package com.java_school.cinemabot.services.database.impl;
 
 import com.java_school.cinemabot.model.Cinema;
 import com.java_school.cinemabot.model.Film;
@@ -6,6 +6,7 @@ import com.java_school.cinemabot.model.Session;
 import com.java_school.cinemabot.repo.CinemaRepo;
 import com.java_school.cinemabot.repo.FilmRepo;
 import com.java_school.cinemabot.repo.SessionRepo;
+import com.java_school.cinemabot.services.database.DatabaseSessionService;
 import com.java_school.cinemabot.services.external.model.SessionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

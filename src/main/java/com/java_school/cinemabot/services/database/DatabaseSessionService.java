@@ -12,3 +12,4 @@ public interface DatabaseSessionService {
     List<Session> getSessionByDate(LocalDate date);
     void saveSessions(List<SessionDTO> sessions);
 }
+
