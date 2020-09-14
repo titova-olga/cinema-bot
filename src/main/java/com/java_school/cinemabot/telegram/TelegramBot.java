@@ -1,5 +1,8 @@
-package com.java_school.cinemabot;
+package com.java_school.cinemabot.telegram;
 
+import com.java_school.cinemabot.telegram.handler.DefaultMessageHandler;
+import com.java_school.cinemabot.telegram.handler.MessageHandler;
+import com.java_school.cinemabot.telegram.handler.MessageType;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,11 +12,13 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.User;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-//@Component
+@Component
 public class TelegramBot extends TelegramLongPollingBot {
 
     @Value("${bot.username}")
@@ -25,6 +30,9 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Autowired
     private  TelegramBotsApi telegramBotsApi;
 
+    @Autowired
+    private MessageDistributor messageDistributor;
+
     @SneakyThrows
     @PostConstruct
     public void registerBot(){
@@ -33,19 +41,14 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
-        String messageText = message.getText();
-        User from = message.getFrom();
-        String fullInfo = "From " + from.getFirstName() + " " + from.getLastName() + ": " + messageText;
-        System.out.println(fullInfo);
-        sendMsg(message.getChatId().toString(), fullInfo);
+        String botAnswer = messageDistributor.generateAnswer(update);
+        sendMessage(message.getChatId().toString(), botAnswer);
     }
 
     @SneakyThrows
-    public synchronized void sendMsg(String chatId, String s) {
-        SendMessage sendMessage = new SendMessage();
+    public synchronized void sendMessage(String chatId, String answer) {
+        SendMessage sendMessage = new SendMessage(chatId, answer);
         sendMessage.enableMarkdown(true);
-        sendMessage.setChatId(chatId);
-        sendMessage.setText(s);
         execute(sendMessage);
     }
 

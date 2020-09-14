@@ -12,22 +12,17 @@ import lombok.SneakyThrows;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.telegram.telegrambots.ApiContextInitializer;
 
 import java.util.List;
 
 @SpringBootApplication
 public class CinemaBotApplication {
 
-    /*@Bean
-    public TelegramBotsApi telegramBotsApi(){
-        return new TelegramBotsApi();
-    }
-    */
-
     @SneakyThrows
     public static void main(String[] args) {
-        //ApiContextInitializer.init();
-        //SpringApplication.run(CinemaBotApplication.class, args);
+        ApiContextInitializer.init();
+        SpringApplication.run(CinemaBotApplication.class, args);
         ConfigurableApplicationContext context = SpringApplication.run(CinemaBotApplication.class, args);
 
         DatabaseFilmService filmService = context.getBean(DatabaseFilmService.class);
