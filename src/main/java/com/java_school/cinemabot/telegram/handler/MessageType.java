@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum MessageType {
+    START("/start", "Старт"),
     ALL_FILMS("/films", "Фильмы в прокате"),
     DEFAULT("", "");
 
