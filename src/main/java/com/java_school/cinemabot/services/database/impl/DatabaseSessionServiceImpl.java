@@ -51,9 +51,6 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
         //List<ExternalSession> sessions = externalSessionService.getSessions();
         for (SessionDTO session : sessions) {
             // todo: more complicated logic
-            //List<Cinema> all = cinemaRepo.findAll();
-            //String cinemaName = session.getCinemaName();
-            //boolean equals = cinemaName.equals("«Мираж Синема» в ТРК «Гулливер»");
             Cinema cinema = cinemaRepo.getCinemaByName(session.getCinemaName());
             Film film = filmRepo.getFilmByName(session.getFilmName());
             sessionRepo.save(Session.builder()
@@ -61,6 +58,8 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
                     .cinema(cinema)
                     .date(session.getDate())
                     .time(session.getTime())
+                    .buyReference(session.getBuyReference())
+                    .price(session.getPrice())
                     .build());
         }
     }

@@ -21,6 +21,7 @@ public class Cinema {
 
     @Column(unique = true)
     private String name;
+    @Column(columnDefinition="TEXT")
     private String address;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

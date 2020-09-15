@@ -11,13 +11,11 @@ import java.util.List;
 @Service
 public class DTOFilmServiceImpl implements DTOFilmService {
 
-    private static final String FILMS_URL = "https://www.mirage.ru/now/film_now.htm";
-
     @Autowired
     private Parser parser;
 
     @Override
     public List<FilmDTO> getFilmsFromWebSites() {
-        return parser.parseFilms(FILMS_URL);
+        return parser.parseFilms();
     }
 }

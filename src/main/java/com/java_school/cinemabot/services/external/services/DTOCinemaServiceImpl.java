@@ -12,14 +12,12 @@ import java.util.List;
 @Service
 public class DTOCinemaServiceImpl implements DTOCinemaService {
 
-    private static final String CINEMAS_URL = "https://www.mirage.ru/cinemas/cinemas.htm";
-
     // todo: list of parsers
     @Autowired
     private Parser parser;
 
     @Override
     public List<CinemaDTO> getExistingCinemas() {
-        return parser.parseCinemas(CINEMAS_URL);
+        return parser.parseCinemas();
     }
 }

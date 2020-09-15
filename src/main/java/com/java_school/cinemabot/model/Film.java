@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -24,10 +21,15 @@ public class Film {
 
     @Column(unique = true)
     private String name;
+
+    @Column(columnDefinition="TEXT")
     private String genre;
     private int minAge;
+
+    @Column(columnDefinition="TEXT")
     private String description;
     private double rating;
     private String producer;
     private LocalDate releaseDate;
+    private String country;
 }

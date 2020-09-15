@@ -12,13 +12,11 @@ import java.util.List;
 @Service
 public class DTOSessionServiceImpl implements DTOSessionService {
 
-    private static final String SESSIONS_URL = "https://www.mirage.ru/schedule/20200915/0/2_4_8_10_11_13_14/0/0/0/schedule.htm";
-
     @Autowired
     private Parser parser;
 
     @Override
     public List<SessionDTO> getSessions() {
-        return parser.parseSessions(SESSIONS_URL);
+        return parser.parseSessions();
     }
 }

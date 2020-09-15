@@ -8,7 +8,7 @@ import com.java_school.cinemabot.services.external.model.SessionDTO;
 import java.util.List;
 
 public interface Parser {
-    List<FilmDTO> parseFilms(String url);
-    List<CinemaDTO> parseCinemas(String url);
-    List<SessionDTO> parseSessions(String url);
+    List<FilmDTO> parseFilms();
+    List<CinemaDTO> parseCinemas();
+    List<SessionDTO> parseSessions();
 }

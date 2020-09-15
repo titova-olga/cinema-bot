@@ -13,4 +13,6 @@ public class SessionDTO {
     private String cinemaName;
     private LocalDate date;
     private LocalTime time;
+    private int price;
+    private String buyReference;
 }

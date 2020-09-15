@@ -22,4 +22,5 @@ public class FilmDTO {
     private double rating;
     private String producer;
     private LocalDate releaseDate;
+    private String country;
 }

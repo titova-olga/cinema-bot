@@ -47,6 +47,7 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
                         .producer(filmDTO.getProducer())
                         .rating(filmDTO.getRating())
                         .releaseDate(filmDTO.getReleaseDate())
+                        .country(filmDTO.getCountry())
                         .build());
             }
         }
