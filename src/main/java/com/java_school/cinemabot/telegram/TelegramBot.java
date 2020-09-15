@@ -1,8 +1,5 @@
 package com.java_school.cinemabot.telegram;
 
-import com.java_school.cinemabot.telegram.handler.DefaultMessageHandler;
-import com.java_school.cinemabot.telegram.handler.MessageHandler;
-import com.java_school.cinemabot.telegram.handler.MessageType;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,9 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
@@ -33,6 +28,9 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Autowired
     private MessageDistributor messageDistributor;
 
+    @Autowired
+    private CalendarCreator calendarCreator;
+
     @SneakyThrows
     @PostConstruct
     public void registerBot(){
@@ -40,15 +38,18 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     public void onUpdateReceived(Update update) {
-        Message message = update.getMessage();
         String botAnswer = messageDistributor.generateAnswer(update);
-        sendMessage(message.getChatId().toString(), botAnswer);
+        String chatId = update.hasCallbackQuery()
+                ? update.getCallbackQuery().getMessage().getChatId().toString()
+                : update.getMessage().getChatId().toString();
+        sendMessage(chatId, botAnswer);
     }
 
     @SneakyThrows
     public synchronized void sendMessage(String chatId, String answer) {
         SendMessage sendMessage = new SendMessage(chatId, answer);
         sendMessage.enableMarkdown(true);
+        sendMessage.setReplyMarkup(calendarCreator.createCalendar(LocalDate.now()));
         execute(sendMessage);
     }
 
