@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class SessionsUpdaterScheduler {
 
@@ -14,6 +16,11 @@ public class SessionsUpdaterScheduler {
 
     @Autowired
     private CinemaParser cinemaParser;
+
+    @PostConstruct
+    public void init(){
+        getSessions();
+    }
 
     @Scheduled(cron = "0 0 12 * * *") // s, m, h, week day, month
     public void getSessions() {

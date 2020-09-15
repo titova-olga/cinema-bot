@@ -26,20 +26,15 @@ public class CinemaBotApplication {
         ApiContextInitializer.init();
         //SpringApplication.run(CinemaBotApplication.class, args);
         ConfigurableApplicationContext context = SpringApplication.run(CinemaBotApplication.class, args);
-
-        DatabaseFilmService filmService = context.getBean(DatabaseFilmService.class);
-        DatabaseCinemaService cinemaService = context.getBean(DatabaseCinemaService.class);
-        DatabaseSessionService sessionService = context.getBean(DatabaseSessionService.class);
+//
+//        DatabaseFilmService filmService = context.getBean(DatabaseFilmService.class);
+//        DatabaseCinemaService cinemaService = context.getBean(DatabaseCinemaService.class);
+//        DatabaseSessionService sessionService = context.getBean(DatabaseSessionService.class);
 
         /*filmService.saveFilms(context.getBean(DTOFilmService.class).getFilmsFromWebSites());
         cinemaService.saveCinemas(context.getBean(DTOCinemaService.class).getExistingCinemas());
         sessionService.saveSessions(context.getBean(DTOSessionService.class).getSessions());
 */
-        List<Film> allFilms = filmService.getAllFilms();
-        for (Film film : allFilms) {
-            System.out.println(film);
-        }
 
-        context.close();
     }
 }
