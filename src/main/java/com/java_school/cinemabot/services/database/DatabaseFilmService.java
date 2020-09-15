@@ -1,7 +1,7 @@
 package com.java_school.cinemabot.services.database;
 
 import com.java_school.cinemabot.model.Film;
-import com.java_school.cinemabot.services.external.model.FilmDTO;
+import com.java_school.cinemabot.parsing.dto.FilmDTO;
 
 import java.util.List;
 

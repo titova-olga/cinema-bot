@@ -1,15 +1,12 @@
 package com.java_school.cinemabot.parsing;
 
-import com.java_school.cinemabot.model.Film;
-import com.java_school.cinemabot.services.external.model.CinemaDTO;
-import com.java_school.cinemabot.services.external.model.FilmDTO;
-import com.java_school.cinemabot.services.external.model.SessionDTO;
+import com.java_school.cinemabot.parsing.dto.CinemaDTO;
+import com.java_school.cinemabot.parsing.dto.FilmDTO;
+import com.java_school.cinemabot.parsing.dto.SessionDTO;
 import lombok.SneakyThrows;
-import lombok.extern.apachecommons.CommonsLog;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +14,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class MirazhCinemaNetworkParser implements Parser {
+public class MirazhCinemaNetworkParser implements CinemaParser {
 
     private static final String NETWORK_NAME = "Мираж Синема";
     private static final String BASE_URL = "https://www.mirage.ru";
@@ -31,8 +27,8 @@ public class MirazhCinemaNetworkParser implements Parser {
 
 
     public static void main(String[] args) {
-        Parser parser = new MirazhCinemaNetworkParser();
-        for (SessionDTO ssesionDTO : parser.parseSessions()) {
+        CinemaParser cinemaParser = new MirazhCinemaNetworkParser();
+        for (SessionDTO ssesionDTO : cinemaParser.parseSessions()) {
             System.out.println(ssesionDTO);
         }
     }

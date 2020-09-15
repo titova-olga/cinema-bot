@@ -1,4 +1,4 @@
-package com.java_school.cinemabot.services.external.model;
+package com.java_school.cinemabot.parsing.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

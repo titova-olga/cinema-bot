@@ -7,7 +7,7 @@ import com.java_school.cinemabot.repo.CinemaRepo;
 import com.java_school.cinemabot.repo.FilmRepo;
 import com.java_school.cinemabot.repo.SessionRepo;
 import com.java_school.cinemabot.services.database.DatabaseSessionService;
-import com.java_school.cinemabot.services.external.model.SessionDTO;
+import com.java_school.cinemabot.parsing.dto.SessionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +25,6 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
 
     @Autowired
     private FilmRepo filmRepo;
-
-    //@Autowired
-    //private ExternalSessionService externalSessionService;
 
     @Override
     public List<Session> getSessionByCinema(String cinema) {
