@@ -3,7 +3,7 @@ package com.java_school.cinemabot.services.database.impl;
 import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.repo.FilmRepo;
 import com.java_school.cinemabot.services.database.DatabaseFilmService;
-import com.java_school.cinemabot.services.external.DTOFilmService;
+import com.java_school.cinemabot.parsing.dto.FilmDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +29,23 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
 
     @Override
     @Transactional
-    public void saveFilms(List<Film> films) {
+    public void saveFilms(List<FilmDTO> films) {
         //todo: more complicated logic
-        films.stream()
-                .filter(film -> filmRepo.getFilmByName(film.getName()) == null)
-                .forEach(film -> filmRepo.save(film));
+        for (FilmDTO filmDTO : films) {
+            String filmName = filmDTO.getName();
+            Film film = filmRepo.getFilmByName(filmName);
+            if(film == null) {
+                filmRepo.save(Film.builder()
+                        .name(filmDTO.getName())
+                        .description(filmDTO.getDescription())
+                        .genre(filmDTO.getGenre())
+                        .minAge(filmDTO.getMinAge())
+                        .producer(filmDTO.getProducer())
+                        .rating(filmDTO.getRating())
+                        .releaseDate(filmDTO.getReleaseDate())
+                        .country(filmDTO.getCountry())
+                        .build());
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.java_school.cinemabot.services.database;
 
 import com.java_school.cinemabot.model.Session;
-import com.java_school.cinemabot.services.external.model.SessionDTO;
+import com.java_school.cinemabot.parsing.dto.SessionDTO;
 
 import java.time.LocalDate;
 import java.util.List;

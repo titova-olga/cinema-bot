@@ -29,4 +29,7 @@ public class Session {
 
     private LocalDate date; // Date
     private LocalTime time;
+
+    private int price;
+    private String buyReference;
 }
