@@ -39,7 +39,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @SneakyThrows
     public synchronized void sendMessage(SendMessage answer) {
-        answer.enableMarkdown(true);
         execute(answer);
     }
 

@@ -10,4 +10,5 @@ import java.util.List;
 public interface FilmRepo extends JpaRepository<Film, Integer> {
     List<Film> findFilmsByGenre(String genre);
     Film getFilmByName(String name);
+    Film getFilmById(Integer id);
 }
