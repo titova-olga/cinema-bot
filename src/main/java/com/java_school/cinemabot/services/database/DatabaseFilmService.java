@@ -8,5 +8,6 @@ import java.util.List;
 public interface DatabaseFilmService {
     List<Film> getAllFilms();
     List<Film> getFilmsByGenre(String genre);
+    Film getFilmById(int id);
     void saveFilms(List<FilmDTO> films);
 }

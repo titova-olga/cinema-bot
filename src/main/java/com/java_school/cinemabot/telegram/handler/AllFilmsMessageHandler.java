@@ -13,6 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 public class AllFilmsMessageHandler implements MessageHandler {
@@ -21,32 +22,21 @@ public class AllFilmsMessageHandler implements MessageHandler {
 
     @Override
     public SendMessage generateAnswer(Update update) {
-        String films = databaseFilmService.getAllFilms().stream().map(Film::getName).collect(Collectors.joining("\n"));
+        //String films = databaseFilmService.getAllFilms().stream().map(Film::getName).collect(Collectors.joining("\n"));
+        // 1. Название фильма /film_id
+        List<Film> films = databaseFilmService.getAllFilms();
+        String filmsAnswer = IntStream.range(0, films.size())
+                .mapToObj(i -> {
+                    return (i + 1) + ". " + films.get(i).getName() + " /film_" + films.get(i).getId();
+                })
+                .collect(Collectors.joining("\n"));
         SendMessage answer = new SendMessage();
-        answer.setText(films);
-        answer.setReplyMarkup(generateKeyBoard());
+        answer.setText(filmsAnswer);
         return answer;
     }
 
     @Override
     public MessageType getMessageType() {
         return MessageType.ALL_FILMS;
-    }
-
-    private InlineKeyboardMarkup generateKeyBoard(){
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-
-        List<InlineKeyboardButton> firstRow = new ArrayList<>();
-        firstRow.add(new InlineKeyboardButton().setText("Фильмы").setCallbackData("/films"));
-
-        List<InlineKeyboardButton> secondRow = new ArrayList<>();
-        secondRow.add(new InlineKeyboardButton().setText("Тык").setCallbackData("Тык123"));
-
-        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-        rowList.add(firstRow);
-        rowList.add(secondRow);
-
-        inlineKeyboardMarkup.setKeyboard(rowList);
-        return inlineKeyboardMarkup;
     }
 }
