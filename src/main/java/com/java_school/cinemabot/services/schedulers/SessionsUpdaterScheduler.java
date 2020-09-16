@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,6 +28,8 @@ public class SessionsUpdaterScheduler {
     @Scheduled(cron = "0 0 12 * * *")
     public void getSessions() {
         databaseSessionService.deleteAllSessions();
-        databaseSessionService.saveSessions(cinemaParser.parseSessions());
+
+        LocalDate date = LocalDate.now(); // todo parse more than one day
+        databaseSessionService.saveSessions(cinemaParser.parseSessions(date));
     }
 }
