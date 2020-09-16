@@ -28,4 +28,10 @@ public class DatabaseCinemaNetworkServiceImpl implements DatabaseCinemaNetworkSe
     public List<CinemaNetwork> getAllNetworks() {
         return cinemaNetworkRepo.findAll();
     }
+
+    @Override
+    @Transactional
+    public CinemaNetwork getCinemaNetworkByName(String name) {
+        return cinemaNetworkRepo.getCinemaNetworkByName(name);
+    }
 }

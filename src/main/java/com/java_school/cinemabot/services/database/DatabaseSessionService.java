@@ -10,6 +10,8 @@ public interface DatabaseSessionService {
     List<Session> getSessionByCinema(String cinema);
     List<Session> getSessionByFilm(String film);
     List<Session> getSessionByDate(LocalDate date);
+    List<Session> getSessionsByFilmId(int filmId);
+    List<Session> getSessionsByCinemaId(int cinemaId);
     void deleteAllSessions();
     void saveSessions(List<SessionDTO> sessions);
 }

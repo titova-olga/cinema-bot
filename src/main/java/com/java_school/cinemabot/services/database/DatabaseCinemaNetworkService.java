@@ -8,4 +8,5 @@ import java.util.List;
 public interface DatabaseCinemaNetworkService {
     void saveNetworks(List<CinemaNetwork> networks);
     List<CinemaNetwork> getAllNetworks();
+    CinemaNetwork getCinemaNetworkByName(String name);
 }
