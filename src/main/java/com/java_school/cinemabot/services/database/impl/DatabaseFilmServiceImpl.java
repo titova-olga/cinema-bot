@@ -36,6 +36,12 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
 
     @Override
     @Transactional
+    public Film getFilmById(int id) {
+        return filmRepo.getFilmById(id);
+    }
+
+    @Override
+    @Transactional
     public void saveFilms(List<FilmDTO> films) {
         //todo: more complicated logic
         for (FilmDTO filmDTO : films) {

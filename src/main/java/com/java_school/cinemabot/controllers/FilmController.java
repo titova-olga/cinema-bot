@@ -4,6 +4,7 @@ import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.services.database.DatabaseFilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +20,10 @@ public class FilmController {
     @GetMapping
     public List<Film> getAllFilms() {
         return databaseFilmService.getAllFilms();
+    }
+
+    @GetMapping("/{id}")
+    public Film getFilmById(@PathVariable int id){
+        return databaseFilmService.getFilmById(id);
     }
 }
