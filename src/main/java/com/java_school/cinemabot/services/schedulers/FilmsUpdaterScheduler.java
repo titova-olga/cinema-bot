@@ -23,7 +23,7 @@ public class FilmsUpdaterScheduler {
         getFilms();
     }
 
-    @Scheduled(cron = "0 0 12 * * *") // s, m, h, week day, month
+    @Scheduled(cron = "0 0 12 * * *")
     public void getFilms() {
         databaseFilmService.saveFilms(cinemaParser.parseFilms());
     }
