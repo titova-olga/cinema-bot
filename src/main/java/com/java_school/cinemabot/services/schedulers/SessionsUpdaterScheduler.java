@@ -1,12 +1,15 @@
 package com.java_school.cinemabot.services.schedulers;
 
 import com.java_school.cinemabot.parsing.CinemaParser;
+import com.java_school.cinemabot.parsing.dto.SessionDTO;
 import com.java_school.cinemabot.services.database.DatabaseSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class SessionsUpdaterScheduler {
@@ -22,9 +25,11 @@ public class SessionsUpdaterScheduler {
         getSessions();
     }
 
-    @Scheduled(cron = "0 0 12 * * *") // s, m, h, week day, month
+    @Scheduled(cron = "0 0 12 * * *")
     public void getSessions() {
-        // todo clear
-        databaseSessionService.saveSessions(cinemaParser.parseSessions());
+        databaseSessionService.deleteAllSessions();
+
+        LocalDate date = LocalDate.now(); // todo parse more than one day
+        databaseSessionService.saveSessions(cinemaParser.parseSessions(date));
     }
 }

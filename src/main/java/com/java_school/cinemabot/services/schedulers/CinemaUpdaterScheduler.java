@@ -22,7 +22,7 @@ public class CinemaUpdaterScheduler {
         getCinemas();
     }
 
-    @Scheduled(cron = "0 0 12 * * *") // s, m, h, week day, month
+    @Scheduled(cron = "0 0 12 * * *")
     public void getCinemas() {
         databaseCinemaService.saveCinemas(cinemaParser.parseCinemas());
     }

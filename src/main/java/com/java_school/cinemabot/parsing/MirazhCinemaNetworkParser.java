@@ -24,15 +24,8 @@ public class MirazhCinemaNetworkParser implements CinemaParser {
     private static final String BASE_URL = "https://www.mirage.ru";
     private static final String CINEMAS_SUFFIX = "/cinemas/cinemas.htm";
     private static final String FILMS_SUFFIX = "/now/film_now.htm";
-    private static final String SESSIONS_SUFFIX = "/schedule/20200920/0/2_4_8_10_11_13_14/0/0/0/schedule.htm";
-
-
-    public static void main(String[] args) {
-        CinemaParser cinemaParser = new MirazhCinemaNetworkParser();
-        for (SessionDTO ssesionDTO : cinemaParser.parseSessions()) {
-            System.out.println(ssesionDTO);
-        }
-    }
+    private static final String SESSIONS_PREFIX = "/schedule/";
+    private static final String SESSIONS_SUFFIX = "/0/0/0/0/0/schedule.htm";
 
     @SneakyThrows
     public List<FilmDTO> parseFilms() {
@@ -126,18 +119,19 @@ public class MirazhCinemaNetworkParser implements CinemaParser {
     }
 
     @SneakyThrows
-    public List<SessionDTO> parseSessions() {
-        String url = BASE_URL + SESSIONS_SUFFIX;
+    public List<SessionDTO> parseSessions(LocalDate date) {
+        String dateStr = date.toString().replaceAll("-", "");
+        String url = BASE_URL + SESSIONS_PREFIX + dateStr + SESSIONS_SUFFIX;
         Document doc = Jsoup.connect(url).get();
         return doc.getElementById("innerTable")
                 .select("tbody > tr") //.getElementsByTag("tbody").first().getElementsByTag("tr")
                 .stream()
-                .map(this::parseOneSessionInformation)
+                .map(element -> parseOneSessionInformation(element, date))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
-    private SessionDTO parseOneSessionInformation(Element element) {
+    private SessionDTO parseOneSessionInformation(Element element, LocalDate date) {
 
         try {
             String filmName = element.getElementsByClass("col2").select("a").text();
@@ -148,14 +142,17 @@ public class MirazhCinemaNetworkParser implements CinemaParser {
                 buyRef = BASE_URL + buyRef.split("=")[1].replaceAll("\"", "");
             }
 
-            String cinemaNameWithRoom = element.getElementsByClass("col5").select("a").text();
-            String cinemaName = cinemaNameWithRoom.substring(0, cinemaNameWithRoom.lastIndexOf("»") + 1);
+            Elements cinemaEl = element.getElementsByClass("col5").select("a");
+            String cinemaNameWithRoom = cinemaEl.text();
+            String onlyRoom = cinemaEl.select("b").text();
+            String cinemaName = cinemaNameWithRoom.replace(onlyRoom, "").trim();
 
             SessionDTO sessionDTO = SessionDTO.builder()
                     .filmName(filmName)
                     .cinemaName(cinemaName)
                     .price(Integer.parseInt(price))
                     .buyReference(buyRef)
+                    .date(date)
                     .time(LocalTime.parse(time))
                     .build();
 
