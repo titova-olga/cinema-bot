@@ -44,6 +44,13 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
 
     @Override
     @Transactional
+    public void deleteAllSessions() {
+        sessionRepo.deleteAllInBatch();
+    }
+
+
+    @Override
+    @Transactional
     public void saveSessions(List<SessionDTO> sessions) {
         //List<ExternalSession> sessions = externalSessionService.getSessions();
         for (SessionDTO session : sessions) {
