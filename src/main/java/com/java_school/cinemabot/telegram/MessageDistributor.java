@@ -1,14 +1,9 @@
 package com.java_school.cinemabot.telegram;
 
-import com.java_school.cinemabot.telegram.callbacks.CallBackType;
-import com.java_school.cinemabot.telegram.callbacks.CallbackHandler;
-import com.java_school.cinemabot.telegram.handler.DefaultMessageHandler;
 import com.java_school.cinemabot.telegram.handler.MessageHandler;
 import com.java_school.cinemabot.telegram.handler.MessageType;
-import org.aspectj.weaver.ast.Call;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.HashMap;
@@ -18,29 +13,29 @@ import java.util.Map;
 @Service
 public class MessageDistributor {
     private final Map<MessageType, MessageHandler> messageHandlerMap = new HashMap<>();
-    private final Map<CallBackType, CallbackHandler> callbackHandlerMap = new HashMap<>();
 
-    public MessageDistributor(List<MessageHandler> messageHandlers,
-                              List<CallbackHandler> callbackHandlers) {
+    public MessageDistributor(List<MessageHandler> messageHandlers) {
         for (MessageHandler handler : messageHandlers) {
             messageHandlerMap.put(handler.getMessageType(), handler);
         }
-        for (CallbackHandler handler : callbackHandlers) {
-            callbackHandlerMap.put(handler.getCallbackType(), handler);
-        }
     }
 
-    public String generateAnswer(Update update) {
-        if (update.hasCallbackQuery()) {
-            var data = update.getCallbackQuery().getData();
-            CallBackType callbackType = CallBackType.findCallbackType(data);
-            CallbackHandler callbackHandler = callbackHandlerMap.get(callbackType);
-            return callbackHandler.generateAnswer(update);
+    public SendMessage generateAnswer(Update update){
+        String messageText;
+        long chatId;
+
+        if (update.hasMessage()) {
+            messageText = update.getMessage().getText();
+            chatId = update.getMessage().getChatId();
         } else {
-            String messageText = update.getMessage().getText();
-            MessageType messageType = MessageType.findMessageHandler(messageText);
-            MessageHandler messageHandler = messageHandlerMap.get(messageType);
-            return messageHandler.generateAnswer(update);
+            messageText = update.getCallbackQuery().getData();
+            chatId = update.getCallbackQuery().getMessage().getChatId();
         }
+        MessageType messageType = MessageType.findMessageHandler(messageText);
+        MessageHandler messageHandler = messageHandlerMap.get(messageType);
+        SendMessage answer = messageHandler.generateAnswer(update);
+        answer.setChatId(chatId);
+
+        return answer;
     }
 }

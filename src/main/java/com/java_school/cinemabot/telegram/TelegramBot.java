@@ -7,11 +7,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
@@ -28,9 +26,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Autowired
     private MessageDistributor messageDistributor;
 
-    @Autowired
-    private CalendarCreator calendarCreator;
-
     @SneakyThrows
     @PostConstruct
     public void registerBot(){
@@ -38,19 +33,19 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     public void onUpdateReceived(Update update) {
-        String botAnswer = messageDistributor.generateAnswer(update);
-        String chatId = update.hasCallbackQuery()
-                ? update.getCallbackQuery().getMessage().getChatId().toString()
-                : update.getMessage().getChatId().toString();
-        sendMessage(chatId, botAnswer);
+        try {
+            SendMessage botAnswer = messageDistributor.generateAnswer(update);
+            sendMessage(botAnswer);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Something wrong, but continue to work");
+        }
     }
 
     @SneakyThrows
-    public synchronized void sendMessage(String chatId, String answer) {
-        SendMessage sendMessage = new SendMessage(chatId, answer);
-        sendMessage.enableMarkdown(true);
-        sendMessage.setReplyMarkup(calendarCreator.createCalendar(LocalDate.now()));
-        execute(sendMessage);
+    public synchronized void sendMessage(SendMessage answer) {
+        answer.enableMarkdown(true);
+        execute(answer);
     }
 
     public String getBotUsername() {

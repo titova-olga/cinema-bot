@@ -1,4 +1,4 @@
-package com.java_school.cinemabot.telegram;
+package com.java_school.cinemabot.telegram.handler.calendar;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -20,9 +20,9 @@ public class CalendarCreatorImpl implements CalendarCreator {
         var isLeapYear = date.isLeapYear();
 
         final String dataIgnore = "CALENDAR IGNORE";
-        final String dataDay = "CALENDAR DAY " + month.toString() + " " + year + " ";
-        final String dataPrev = "CALENDAR PREV " + month.toString();
-        final String dataNext = "CALENDAR NEXT " + month.toString();
+        final String dataDay = "CALENDAR DAY " + month.getValue() + " " + year + " ";
+        final String dataPrev = "CALENDAR PREV " + month.getValue() + " " + year;
+        final String dataNext = "CALENDAR NEXT " + month.getValue() + " " + year;
 
         //First row - Month and Year
         List<InlineKeyboardButton> row = new ArrayList<>();
