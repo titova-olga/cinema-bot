@@ -35,11 +35,6 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
     }
 
     @Override
-    public Film getFilmById(int id) {
-        return filmRepo.getFilmById(id);
-    }
-
-    @Override
     @Transactional
     public Film getFilmById(int id) {
         return filmRepo.getFilmById(id);
