@@ -27,6 +27,11 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
     private FilmRepo filmRepo;
 
     @Override
+    public Session getSessionById(int sessionId) {
+        return sessionRepo.findById(sessionId).orElseGet(Session::new);
+    }
+
+    @Override
     public List<Session> getSessionByCinema(String cinema) {
         return sessionRepo.findByCinemaName(cinema);
     }
@@ -40,6 +45,21 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
     @Transactional
     public List<Session> getSessionByDate(LocalDate date) {
         return sessionRepo.findByDate(date);
+    }
+
+    @Override
+    public List<Session> getByFilmId(int filmId) {
+        return sessionRepo.findByFilmId(filmId);
+    }
+
+    @Override
+    public List<Session> getByFilmAndCinema(int filmId, int cinemaId) {
+        return sessionRepo.findByFilmIdAndCinemaId(filmId, cinemaId);
+    }
+
+    @Override
+    public List<Session> getByFilmAndCinemaAndDate(int filmId, int cinemaId, LocalDate date) {
+        return sessionRepo.findByFilmIdAndCinemaIdAndDate(filmId, cinemaId, date);
     }
 
     @Override

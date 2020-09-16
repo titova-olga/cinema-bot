@@ -29,7 +29,7 @@ public class SessionsUpdaterScheduler {
     public void getSessions() {
         databaseSessionService.deleteAllSessions();
 
-        LocalDate date = LocalDate.now(); // todo parse more than one day
+        LocalDate date = LocalDate.now().plusDays(1); // todo parse more than one day
         databaseSessionService.saveSessions(cinemaParser.parseSessions(date));
     }
 }

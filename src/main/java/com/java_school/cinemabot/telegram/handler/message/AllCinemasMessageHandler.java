@@ -1,9 +1,7 @@
-package com.java_school.cinemabot.telegram.handler;
+package com.java_school.cinemabot.telegram.handler.message;
 
 import com.java_school.cinemabot.model.Cinema;
-import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.services.database.DatabaseCinemaService;
-import com.java_school.cinemabot.services.database.DatabaseFilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
-public class CinemasMessageHandler implements MessageHandler {
+public class AllCinemasMessageHandler implements MessageHandler {
 
     @Autowired
     private DatabaseCinemaService databaseCinemaService;

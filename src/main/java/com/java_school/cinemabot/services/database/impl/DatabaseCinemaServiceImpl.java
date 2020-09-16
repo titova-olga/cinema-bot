@@ -2,6 +2,7 @@ package com.java_school.cinemabot.services.database.impl;
 
 import com.java_school.cinemabot.model.Cinema;
 import com.java_school.cinemabot.model.CinemaNetwork;
+import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.repo.CinemaNetworkRepo;
 import com.java_school.cinemabot.repo.CinemaRepo;
 import com.java_school.cinemabot.services.database.DatabaseCinemaService;
@@ -36,6 +37,11 @@ public class DatabaseCinemaServiceImpl implements DatabaseCinemaService {
                     .cinemaNetwork(cinemaNetwork)
                     .build());
         }
+    }
+
+    @Override
+    public Cinema getCinemaById(int cinemaId) {
+        return cinemaRepo.getCinemaById(cinemaId);
     }
 
     @Override

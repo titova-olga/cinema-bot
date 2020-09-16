@@ -1,5 +1,7 @@
-package com.java_school.cinemabot.telegram.handler;
+package com.java_school.cinemabot.telegram.handler.message;
 
+import com.java_school.cinemabot.telegram.handler.message.MessageHandler;
+import com.java_school.cinemabot.telegram.handler.message.MessageType;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Component
 public class StartMessageHandler implements MessageHandler {
+
     @Override
     public SendMessage generateAnswer(Update update) {
         SendMessage answer = new SendMessage();
@@ -32,9 +35,16 @@ public class StartMessageHandler implements MessageHandler {
         replyKeyboardMarkup.setOneTimeKeyboard(false);
 
         List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow keyboardFirstRow = new KeyboardRow();
-        keyboardFirstRow.add(new KeyboardButton("Фильмы в прокате"));
-        keyboard.add(keyboardFirstRow);
+        KeyboardRow keyboardRow1 = new KeyboardRow();
+        keyboardRow1.add(new KeyboardButton("Фильмы"));
+        keyboardRow1.add(new KeyboardButton("Кинотеатры"));
+        keyboardRow1.add(new KeyboardButton("Даты"));
+
+        KeyboardRow keyboardRow2 = new KeyboardRow();
+        keyboardRow2.add(new KeyboardButton("Сеансы"));
+
+        keyboard.add(keyboardRow1);
+        keyboard.add(keyboardRow2);
 
         replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;

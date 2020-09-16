@@ -1,7 +1,9 @@
-package com.java_school.cinemabot.telegram.handler;
+package com.java_school.cinemabot.telegram.handler.message;
 
 import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.services.database.DatabaseFilmService;
+import com.java_school.cinemabot.telegram.handler.message.MessageHandler;
+import com.java_school.cinemabot.telegram.handler.message.MessageType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -11,8 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Component
 public class FilmMessageHandler implements MessageHandler {
@@ -40,8 +40,8 @@ public class FilmMessageHandler implements MessageHandler {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         List<InlineKeyboardButton> firstRow = new ArrayList<>();
-        firstRow.add(new InlineKeyboardButton().setText("Кинотеатры").setCallbackData("/cinemas" + update.getMessage().getText()));
-        firstRow.add(new InlineKeyboardButton().setText("Дата").setCallbackData("/date" + update.getMessage().getText()));
+        firstRow.add(new InlineKeyboardButton().setText("Хочу смотреть!").setCallbackData("/answer" + update.getMessage().getText()));
+        //firstRow.add(new InlineKeyboardButton().setText("Дата").setCallbackData("/reject"));
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         rowList.add(firstRow);
