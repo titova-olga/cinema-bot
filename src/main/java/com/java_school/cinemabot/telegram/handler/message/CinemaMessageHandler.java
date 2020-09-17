@@ -23,9 +23,12 @@ public class CinemaMessageHandler implements MessageHandler {
     public SendMessage generateAnswer(Update update) {
         int cinemaId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
         Cinema cinema = databaseCinemaService.getCinemaById(cinemaId);
-        String filmAnswer = "**" + cinema.getName() + "**\n" + cinema.getAddress();
+        String filmAnswer = Stickers.CINEMA + "<b><i>" + cinema.getName() + "</i></b>" + "\n"
+                + cinema.getAddress();
+
         SendMessage answer = new SendMessage();
         answer.setText(filmAnswer);
+        answer.enableHtml(true);
         answer.setReplyMarkup(generateKeyBoard(update));
         return answer;
     }

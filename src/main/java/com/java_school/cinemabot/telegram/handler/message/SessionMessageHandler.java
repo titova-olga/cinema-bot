@@ -18,7 +18,9 @@ public class SessionMessageHandler implements MessageHandler {
     public SendMessage generateAnswer(Update update) {
         int sessionId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
         Session session = databaseSessionService.getSessionById(sessionId);
-        String filmAnswer = "Ура! Держи ссылку на покупку билетов!\n" + session.getBuyReference();
+        String buyReference = session.getBuyReference();
+
+        String filmAnswer = "Ура! Держи ссылку на покупку билетов!\n" + buyReference;
         SendMessage answer = new SendMessage();
         answer.setText(filmAnswer);
         return answer;

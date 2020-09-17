@@ -38,7 +38,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             sendMessage(botAnswer);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
             System.out.println("Something wrong, but continue to work");
         }
     }

@@ -8,7 +8,13 @@ import lombok.RequiredArgsConstructor;
 public enum Stickers {
     FILM("\uD83C\uDFAC"),
     CINEMA("\uD83C\uDFDB"),
-    MONEY("\uD83D\uDCB8"); // "\uD83D\uDCB0" "\uD83D\uDCB5"
+    MONEY("\uD83D\uDCB8"),
+    SMILE("\uD83D\uDE01"); // "\uD83D\uDCB0" "\uD83D\uDCB5"
 
     private final String code;
+
+    @Override
+    public String toString() {
+        return code;
+    }
 }

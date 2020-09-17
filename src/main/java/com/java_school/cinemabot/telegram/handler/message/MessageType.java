@@ -22,7 +22,8 @@ public enum MessageType {
     ALL_SESSIONS("Сеансы"), // message
     SESSION("/session_"), // message
 
-    ANSWER("/answer"), // callback (command)
+    FILM_CHOICE("/answer/film_"), // callback
+    CINEMA_CHOICE("/answer/cinema_"), // callback
 
     DEFAULT("");
 

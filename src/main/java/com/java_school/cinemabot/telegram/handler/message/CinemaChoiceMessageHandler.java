@@ -1,27 +1,26 @@
 package com.java_school.cinemabot.telegram.handler.message;
 
-import com.java_school.cinemabot.telegram.cache.ResponseType;
-import com.java_school.cinemabot.telegram.cache.UsersResponsesCache;
+import com.java_school.cinemabot.telegram.cache.UserChoice;
+import com.java_school.cinemabot.telegram.cache.UsersChoicesCache;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
-public class AnswerHandler implements MessageHandler {
+public class CinemaChoiceMessageHandler implements MessageHandler {
     @Override
     public MessageType getMessageType() {
-        return MessageType.ANSWER;
+        return MessageType.CINEMA_CHOICE;
     }
 
     @Override
     public SendMessage generateAnswer(Update update) {
         String response = update.getCallbackQuery().getData();//.split("/")[2];
-        ResponseType responseType = ResponseType.getResponseType(response);
         Long chatId = update.getCallbackQuery().getMessage().getChatId();
-        int responseId = Integer.parseInt(response.split("/")[2].split("_")[1]);
+        int choiceId = Integer.parseInt(response.split("/")[2].split("_")[1]);
 
-        UsersResponsesCache.addUserResponse(chatId, responseType, responseId);
+        UserChoice userChoice = UsersChoicesCache.getOrCreateUserChoice(chatId);
+        userChoice.addCinemaChoice(choiceId);
 
         SendMessage answer = new SendMessage();
         answer.setText("Продолжай дальше или посмотри сеансы, основанные на твоем выборе! ");
