@@ -65,7 +65,7 @@ public class SessionsHandler implements MessageHandler {
             return answer;
         }
 
-        UsersResponsesCache.removeInfoAboutUserResponses(chatId);
+        UsersResponsesCache.removeInfoAboutUserResponses(chatId); // todo
 
         return null;
     }
