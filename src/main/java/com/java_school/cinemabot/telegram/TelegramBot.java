@@ -1,5 +1,6 @@
 package com.java_school.cinemabot.telegram;
 
+import com.java_school.cinemabot.telegram.handler.message.MessageType;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,9 +8,13 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import javax.annotation.PostConstruct;
+
+import static java.lang.Math.toIntExact;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
@@ -35,6 +40,22 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         try {
             SendMessage botAnswer = messageDistributor.generateAnswer(update);
+
+            if (update.hasCallbackQuery()) {
+                String messageText = update.getCallbackQuery().getData();
+                MessageType messageType = MessageType.getMessageType(messageText);
+
+                if (messageType == MessageType.CALENDAR_NEXT || messageType == MessageType.CALENDAR_PREV) {
+                    long messageId = update.getCallbackQuery().getMessage().getMessageId();
+                    EditMessageText new_message = new EditMessageText()
+                            .setChatId(botAnswer.getChatId())
+                            .setMessageId(toIntExact(messageId))
+                            .setText(botAnswer.getText())
+                            .setReplyMarkup((InlineKeyboardMarkup) botAnswer.getReplyMarkup());
+                    editMessage(new_message);
+                    return;
+                }
+            }
             sendMessage(botAnswer);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -44,6 +65,11 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @SneakyThrows
     public synchronized void sendMessage(SendMessage answer) {
+        execute(answer);
+    }
+
+    @SneakyThrows
+    public synchronized void editMessage(EditMessageText answer) {
         execute(answer);
     }
 
