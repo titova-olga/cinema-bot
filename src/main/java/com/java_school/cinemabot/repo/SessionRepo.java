@@ -21,7 +21,7 @@ public interface SessionRepo extends JpaRepository<Session, Integer> {
             "where s.film.id in ?1 " +
             "and s.cinema.id in ?2 " +
             "and s.date in ?3" +
-            " order by s.cinema.name, s.film.name, s.time")
+            " order by s.date, s.cinema.name, s.film.name, s.time")
     List<Session> findByFilmCinemaDateIn(List<Integer> filmIds,
                                          List<Integer> cinemaIds,
                                          List<LocalDate> dates);

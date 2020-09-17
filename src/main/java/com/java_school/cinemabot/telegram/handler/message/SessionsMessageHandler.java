@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -67,10 +70,21 @@ public class SessionsMessageHandler implements MessageHandler {
         StringBuilder sessionsAnswer = new StringBuilder();
         sessionsAnswer.append("<b>НАЙДЕННЫЕ СЕАНСЫ:</b>\n");
 
+        LocalDate date = null;
         String cinemaName = null;
         String filmName = null;
         for(int i = 0; i < sessions.size(); i++) {
             Session session = sessions.get(i);
+
+            LocalDate curDate = session.getDate();
+            if(!curDate.equals(date)) {
+                filmName = null;
+                cinemaName = null;
+                date = curDate;
+                sessionsAnswer.append("\n" + "<b>"
+                        + date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
+                        + "</b>" + "\n");
+            }
 
             String curCinemaName = session.getCinema().getName();
             if(!curCinemaName.equals(cinemaName)) {
