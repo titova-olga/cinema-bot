@@ -2,21 +2,26 @@ package com.java_school.cinemabot.telegram.cache;
 
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class UsersResponsesCache {
-    private final static Map<Long, Map<ResponseType, Integer>> usersResponsesMap = new HashMap<>();
+    private final static Map<Long, Map<ResponseType, List<Integer>>> usersResponsesMap = new HashMap<>();
 
     public static void addUserResponse(long chatId, ResponseType type, int responseId) {
         if (!usersResponsesMap.containsKey(chatId)) {
-            usersResponsesMap.put(chatId, new HashMap<>());
+            usersResponsesMap.put(chatId, createTemplateMapForResponses());
         }
-        usersResponsesMap.get(chatId).put(type, responseId);
+        usersResponsesMap.get(chatId).get(type).add(responseId);
     }
 
-    public static Map<ResponseType, Integer> getUsersResponses(long chatId){
+    private static Map<ResponseType, List<Integer>> createTemplateMapForResponses() {
+        Map<ResponseType, List<Integer>> responsesMap = new HashMap<>();
+        Arrays.stream(ResponseType.values()).forEach(responseType -> responsesMap.put(responseType, new ArrayList<>()));
+        return responsesMap;
+    }
+
+    public static Map<ResponseType, List<Integer>> getUsersResponses(long chatId){
         return usersResponsesMap.get(chatId);
     }
 

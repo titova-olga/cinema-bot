@@ -15,6 +15,10 @@ public interface DatabaseSessionService {
     List<Session> getSessionsByFilmAndCinemaAndDate(int filmId, int cinemaId, LocalDate date);
     List<Session> getSessionsByFilmId(int filmId);
     List<Session> getSessionsByCinemaId(int cinemaId);
+    List<Session> getSessionsByFilmIdsCinemaIdsDatesAndIfAbsentGetAll(List<Integer> filmIds,
+                                                                      List<Integer> cinemaIds,
+                                                                      List<LocalDate> dates);
+
     void deleteAllSessions();
     void saveSessions(List<SessionDTO> sessions);
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,6 +72,25 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
     @Transactional
     public void deleteAllSessions() {
         sessionRepo.deleteAllInBatch();
+    }
+
+    @Override
+    @Transactional
+    public List<Session> getSessionsByFilmIdsCinemaIdsDatesAndIfAbsentGetAll(List<Integer> filmIds,
+                                                                             List<Integer> cinemaIds,
+                                                                             List<LocalDate> dates) {
+        if (filmIds.size() == 0) {
+            filmIds = filmRepo.getAllIds();
+        }
+        if (cinemaIds.size() == 0) {
+            cinemaIds = cinemaRepo.getAllIds();
+        }
+        if (dates.size() == 0) {
+            dates = new ArrayList<>();
+            dates.add(LocalDate.now());
+        }
+
+        return sessionRepo.findByFilmCinemaDateIn(filmIds, cinemaIds, dates);
     }
 
 

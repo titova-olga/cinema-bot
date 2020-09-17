@@ -37,6 +37,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             SendMessage botAnswer = messageDistributor.generateAnswer(update);
             sendMessage(botAnswer);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
             System.out.println("Something wrong, but continue to work");
         }

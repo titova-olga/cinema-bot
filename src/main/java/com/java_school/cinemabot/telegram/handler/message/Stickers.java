@@ -1,0 +1,14 @@
+package com.java_school.cinemabot.telegram.handler.message;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Getter
+public enum Stickers {
+    FILM("\uD83C\uDFAC"),
+    CINEMA("\uD83C\uDFDB"),
+    MONEY("\uD83D\uDCB8"); // "\uD83D\uDCB0" "\uD83D\uDCB5"
+
+    private final String code;
+}
