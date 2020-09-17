@@ -19,7 +19,7 @@ public class DatabaseCinemaNetworkServiceImpl implements DatabaseCinemaNetworkSe
     public void saveNetworks(List<CinemaNetwork> networks) {
         //todo: more complicated logic
         networks.stream()
-                .filter(network -> cinemaNetworkRepo.getCinemaNetworkByName(network.getName()) == null)
+                .filter(network -> cinemaNetworkRepo.findCinemaNetworkByName(network.getName()) == null)
                 .forEach(network -> cinemaNetworkRepo.save(network));
     }
 
@@ -32,6 +32,6 @@ public class DatabaseCinemaNetworkServiceImpl implements DatabaseCinemaNetworkSe
     @Override
     @Transactional
     public CinemaNetwork getCinemaNetworkByName(String name) {
-        return cinemaNetworkRepo.getCinemaNetworkByName(name);
+        return cinemaNetworkRepo.findCinemaNetworkByName(name);
     }
 }

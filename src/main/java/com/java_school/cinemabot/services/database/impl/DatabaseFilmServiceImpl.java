@@ -37,7 +37,7 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
     @Override
     @Transactional
     public Film getFilmById(int id) {
-        return filmRepo.getFilmById(id);
+        return filmRepo.findFilmById(id);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
         //todo: more complicated logic
         for (FilmDTO filmDTO : films) {
             String filmName = filmDTO.getName();
-            Film film = filmRepo.getFilmByName(filmName);
+            Film film = filmRepo.findFilmByName(filmName);
             if(film == null) {
                 filmRepo.save(Film.builder()
                         .name(filmDTO.getName())

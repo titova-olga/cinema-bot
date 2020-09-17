@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CinemaNetworkRepo extends JpaRepository<CinemaNetwork, Integer> {
-    CinemaNetwork getCinemaNetworkByName(String name);
+    CinemaNetwork findCinemaNetworkByName(String name);
 }
 

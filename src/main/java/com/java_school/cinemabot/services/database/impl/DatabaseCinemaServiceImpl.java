@@ -2,7 +2,6 @@ package com.java_school.cinemabot.services.database.impl;
 
 import com.java_school.cinemabot.model.Cinema;
 import com.java_school.cinemabot.model.CinemaNetwork;
-import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.repo.CinemaNetworkRepo;
 import com.java_school.cinemabot.repo.CinemaRepo;
 import com.java_school.cinemabot.services.database.DatabaseCinemaService;
@@ -27,7 +26,7 @@ public class DatabaseCinemaServiceImpl implements DatabaseCinemaService {
     public void saveCinemas(List<CinemaDTO> cinemas) {
         for (CinemaDTO cinema : cinemas) {
             String networkName = cinema.getNetworkName();
-            CinemaNetwork cinemaNetwork = cinemaNetworkRepo.getCinemaNetworkByName(networkName);
+            CinemaNetwork cinemaNetwork = cinemaNetworkRepo.findCinemaNetworkByName(networkName);
             if(cinemaNetwork == null) {
                 cinemaNetwork = CinemaNetwork.builder().name(networkName).build();
             }
@@ -41,7 +40,7 @@ public class DatabaseCinemaServiceImpl implements DatabaseCinemaService {
 
     @Override
     public Cinema getCinemaById(int cinemaId) {
-        return cinemaRepo.getCinemaById(cinemaId);
+        return cinemaRepo.findCinemaById(cinemaId);
     }
 
     @Override

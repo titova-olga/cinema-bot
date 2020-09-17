@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,7 +31,7 @@ public class SessionsHandler implements MessageHandler {
         Map<ResponseType, Integer> usersResponses = UsersResponsesCache.getUsersResponses(chatId);
 
         if(usersResponses.size() == 1 && usersResponses.containsKey(ResponseType.FILM)) {
-            List<Session> sessions = databaseSessionService.getByFilmId(usersResponses.get(ResponseType.FILM));
+            List<Session> sessions = databaseSessionService.getSessionsByFilmId(usersResponses.get(ResponseType.FILM));
             String sessionsAnswer = IntStream.range(0, sessions.size())
                     .mapToObj(i -> {
                         return (i + 1) + ". "
@@ -50,7 +49,7 @@ public class SessionsHandler implements MessageHandler {
                 && usersResponses.containsKey(ResponseType.FILM)
                 && usersResponses.containsKey(ResponseType.CINEMA)) {
             List<Session> sessions = databaseSessionService
-                    .getByFilmAndCinema(usersResponses.get(ResponseType.FILM),
+                    .getSessionsByFilmAndCinema(usersResponses.get(ResponseType.FILM),
                                         usersResponses.get(ResponseType.CINEMA));
             String sessionsAnswer = IntStream.range(0, sessions.size())
                     .mapToObj(i -> {

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CinemaRepo extends JpaRepository<Cinema, Integer> {
     List<Cinema> findByCinemaNetworkName(String cinemaNetwork);
-    Cinema getCinemaById(int cinemaId);
-    Cinema getCinemaByName(String name);
+    Cinema findCinemaById(int cinemaId);
+    Cinema findCinemaByName(String name);
 
 }

@@ -48,17 +48,12 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
     }
 
     @Override
-    public List<Session> getByFilmId(int filmId) {
-        return sessionRepo.findByFilmId(filmId);
-    }
-
-    @Override
-    public List<Session> getByFilmAndCinema(int filmId, int cinemaId) {
+    public List<Session> getSessionsByFilmAndCinema(int filmId, int cinemaId) {
         return sessionRepo.findByFilmIdAndCinemaId(filmId, cinemaId);
     }
 
     @Override
-    public List<Session> getByFilmAndCinemaAndDate(int filmId, int cinemaId, LocalDate date) {
+    public List<Session> getSessionsByFilmAndCinemaAndDate(int filmId, int cinemaId, LocalDate date) {
         return sessionRepo.findByFilmIdAndCinemaIdAndDate(filmId, cinemaId, date);
     }
 
@@ -85,8 +80,8 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
         //List<ExternalSession> sessions = externalSessionService.getSessions();
         for (SessionDTO session : sessions) {
             // todo: more complicated logic
-            Cinema cinema = cinemaRepo.getCinemaByName(session.getCinemaName());
-            Film film = filmRepo.getFilmByName(session.getFilmName());
+            Cinema cinema = cinemaRepo.findCinemaByName(session.getCinemaName());
+            Film film = filmRepo.findFilmByName(session.getFilmName());
             sessionRepo.save(Session.builder()
                     .film(film)
                     .cinema(cinema)
