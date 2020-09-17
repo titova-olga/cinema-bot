@@ -14,5 +14,6 @@ public interface SessionRepo extends JpaRepository<Session, Integer> {
     List<Session> findByFilmId(int filmId);
     List<Session> findByFilmIdAndCinemaId(int filmId, int cinemaId);
     List<Session> findByFilmIdAndCinemaIdAndDate(int filmId, int cinemaId, LocalDate date);
+    List<Session> findByCinemaIdOrderByFilmDescDateAsc(int cinemaId);
 }
 

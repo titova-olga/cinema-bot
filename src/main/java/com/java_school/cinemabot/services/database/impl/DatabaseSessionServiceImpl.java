@@ -63,6 +63,16 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
     }
 
     @Override
+    public List<Session> getSessionsByFilmId(int filmId) {
+        return sessionRepo.findByFilmId(filmId);
+    }
+
+    @Override
+    public List<Session> getSessionsByCinemaId(int cinemaId) {
+        return sessionRepo.findByCinemaIdOrderByFilmDescDateAsc(cinemaId);
+    }
+
+    @Override
     @Transactional
     public void deleteAllSessions() {
         sessionRepo.deleteAllInBatch();

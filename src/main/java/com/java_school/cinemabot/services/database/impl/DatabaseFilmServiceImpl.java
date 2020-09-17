@@ -4,7 +4,10 @@ import com.java_school.cinemabot.model.Film;
 import com.java_school.cinemabot.repo.FilmRepo;
 import com.java_school.cinemabot.services.database.DatabaseFilmService;
 import com.java_school.cinemabot.parsing.dto.FilmDTO;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -12,13 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 public class DatabaseFilmServiceImpl implements DatabaseFilmService {
     @Autowired
     private FilmRepo filmRepo;
 
+    @SneakyThrows
     @Override
     @Transactional
+    @Cacheable(value = "allFilmsCache")
     public List<Film> getAllFilms() {
+        log.info("Retrieving films");
         return filmRepo.findAll();
     }
 
@@ -28,6 +35,7 @@ public class DatabaseFilmServiceImpl implements DatabaseFilmService {
     }
 
     @Override
+    @Transactional
     public Film getFilmById(int id) {
         return filmRepo.getFilmById(id);
     }
