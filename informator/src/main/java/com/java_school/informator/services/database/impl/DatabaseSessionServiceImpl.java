@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -64,7 +67,18 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
     }
 
     @Override
-    public List<Session> getSessions(List<Integer> films,List<Integer> cinemas, List<LocalDate> dates) {
+    public List<Session> getSessions(List<Integer> films, List<Integer> cinemas, List<LocalDate> dates) {
+        if(dates.isEmpty()){
+            dates.add(LocalDate.now());
+        }
+
+        /*List<Date> datesTransformed = new ArrayList<>();
+        for (LocalDate localDate : dates) {
+            datesTransformed.add(java.util.Date.from(localDate.atStartOfDay()
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant()));
+        }
+        datesTransformed.forEach(System.out::println);*/
         return sessionRepo.findSessions(films, cinemas, dates);
     }
 }

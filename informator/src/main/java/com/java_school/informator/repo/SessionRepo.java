@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface SessionRepo extends JpaRepository<Session, Integer> {
@@ -20,7 +21,9 @@ public interface SessionRepo extends JpaRepository<Session, Integer> {
     @Query("SELECT s FROM Session s WHERE " +
             "(COALESCE(:films, null) is null or s.film.id IN :films ) AND " +
             "(COALESCE(:cinemas, null) is null or s.cinema.id IN :cinemas ) AND " +
-            "(COALESCE(:dates, null) is null  or s.date in :dates) ")
+            "((s.date = current_date AND (s.time > current_time))" +
+            "OR" +
+            "(s.date in :dates AND s.date > current_date))")
     List<Session> findSessions(
             @Param("films")List<Integer> films,
             @Param("cinemas")List<Integer> cinemas,

@@ -35,7 +35,6 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
 
     @Override
     public void saveSessions(List<SessionDTO> sessions) {
-        //List<ExternalSession> sessions = externalSessionService.getSessions();
         for (SessionDTO session : sessions) {
             // todo: more complicated logic
             Cinema cinema = cinemaRepo.findCinemaByName(session.getCinemaName());

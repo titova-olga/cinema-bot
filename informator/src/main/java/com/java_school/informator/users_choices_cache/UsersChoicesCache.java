@@ -1,4 +1,4 @@
-package com.java_school.bot.telegram.cache;
+package com.java_school.informator.users_choices_cache;
 
 import org.springframework.stereotype.Component;
 

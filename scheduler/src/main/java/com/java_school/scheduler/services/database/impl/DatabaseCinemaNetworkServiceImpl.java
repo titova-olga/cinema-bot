@@ -18,7 +18,6 @@ public class DatabaseCinemaNetworkServiceImpl implements DatabaseCinemaNetworkSe
 
     @Override
     public void saveNetworks(List<CinemaNetwork> networks) {
-        //todo: more complicated logic
         networks.stream()
                 .filter(network -> cinemaNetworkRepo.findCinemaNetworkByName(network.getName()) == null)
                 .forEach(network -> cinemaNetworkRepo.save(network));

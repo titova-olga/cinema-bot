@@ -2,11 +2,11 @@ package com.java_school.informator.controllers;
 
 import com.java_school.informator.model.Cinema;
 import com.java_school.informator.services.database.DatabaseCinemaService;
+import com.java_school.informator.users_choices_cache.UserChoice;
+import com.java_school.informator.users_choices_cache.UsersChoicesCache;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
