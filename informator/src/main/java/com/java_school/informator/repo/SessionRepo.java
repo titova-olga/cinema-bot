@@ -23,7 +23,8 @@ public interface SessionRepo extends JpaRepository<Session, Integer> {
             "(COALESCE(:cinemas, null) is null or s.cinema.id IN :cinemas ) AND " +
             "((s.date = current_date AND (s.time > current_time))" +
             "OR" +
-            "(s.date in :dates AND s.date > current_date))")
+            "(s.date in :dates AND s.date > current_date))" +
+            "ORDER BY s.date, s.cinema.name, s.film.name, s.time ")
     List<Session> findSessions(
             @Param("films")List<Integer> films,
             @Param("cinemas")List<Integer> cinemas,
