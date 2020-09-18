@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @Service
 public class MessageDistributor{
     private final Map<MessageType, MessageHandler> messageHandlerMap = new HashMap<>();

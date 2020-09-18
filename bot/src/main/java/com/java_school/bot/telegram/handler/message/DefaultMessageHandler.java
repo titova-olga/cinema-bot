@@ -9,7 +9,7 @@ public class DefaultMessageHandler implements MessageHandler {
     @Override
     public SendMessage generateAnswer(Update update) {
         SendMessage answer = new SendMessage();
-        answer.setText("I don't recognize the command :(");
+        answer.setText("Я не распознал твою команду :(");
         return answer;
     }
 

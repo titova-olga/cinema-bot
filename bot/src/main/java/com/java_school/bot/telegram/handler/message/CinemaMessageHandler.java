@@ -27,10 +27,12 @@ public class CinemaMessageHandler implements MessageHandler {
         int cinemaId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
         Cinema cinema = restTemplate.getForObject(RestUrls.CINEMAS + "/" + cinemaId, Cinema.class);
         if(cinema != null){
-            cinemaAnswer = "**" + cinema.getName() + "**\n" + cinema.getAddress();
+            cinemaAnswer = Stickers.CINEMA + "<b><i>" + cinema.getName() + "</i></b>" + "\n"
+                    + cinema.getAddress();
         }
         SendMessage answer = new SendMessage();
         answer.setText(cinemaAnswer);
+        answer.enableHtml(true);
         answer.setReplyMarkup(generateKeyBoard(update));
         return answer;
     }

@@ -27,10 +27,15 @@ public class FilmMessageHandler implements MessageHandler {
         int filmId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
         Film film = restTemplate.getForObject(RestUrls.FILMS + "/" + filmId, Film.class);
         if(film != null){
-            filmAnswer = "**" + film.getName() + "**\n" + film.getDescription();
+            filmAnswer = Stickers.FILM + "<b><i>" + film.getName() + "</i></b>" + Stickers.FILM + "\n\n"
+                    + "<b>Жанр:</b> " + film.getGenre() + "\n"
+                    + "<b>Режиссер:</b> " + film.getProducer() + "\n"
+                    + "<b>Возрастное ограничение:</b> " + film.getMinAge() + "+\n"
+                    + "<b>Описание:</b> " + film.getDescription();
         }
         SendMessage answer = new SendMessage();
         answer.setText(filmAnswer);
+        answer.enableHtml(true);
         answer.setReplyMarkup(generateKeyBoard(update));
         return answer;
     }
