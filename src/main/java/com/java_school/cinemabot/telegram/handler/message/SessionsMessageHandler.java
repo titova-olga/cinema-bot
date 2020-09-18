@@ -20,6 +20,9 @@ import java.util.Map;
 public class SessionsMessageHandler implements MessageHandler {
 
     @Autowired
+    private UsersChoicesCache usersChoicesCache;
+
+    @Autowired
     private DatabaseSessionService databaseSessionService;
 
     @Override
@@ -30,7 +33,7 @@ public class SessionsMessageHandler implements MessageHandler {
     @Override
     public SendMessage generateAnswer(Update update) {
         Long chatId = update.getMessage().getChatId();
-        UserChoice userChoice = UsersChoicesCache.getUserChoice(chatId);
+        UserChoice userChoice = usersChoicesCache.getUserChoice(chatId);
 
         if (userChoice == null) {
             return userChoiceAbsent();
@@ -105,7 +108,7 @@ public class SessionsMessageHandler implements MessageHandler {
         }
 
         String res = sessionsAnswer.toString();
-        UsersChoicesCache.removeInfoAboutUserChoices(chatId);
+        usersChoicesCache.removeInfoAboutUserChoices(chatId);
 
         answer.setText(res);
         answer.enableHtml(true);

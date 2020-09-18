@@ -2,12 +2,17 @@ package com.java_school.cinemabot.telegram.handler.message;
 
 import com.java_school.cinemabot.telegram.cache.UserChoice;
 import com.java_school.cinemabot.telegram.cache.UsersChoicesCache;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 public class FilmChoiceMessageHandler implements MessageHandler {
+
+    @Autowired
+    private UsersChoicesCache usersChoicesCache;
+
     @Override
     public MessageType getMessageType() {
         return MessageType.FILM_CHOICE;
@@ -19,7 +24,7 @@ public class FilmChoiceMessageHandler implements MessageHandler {
         Long chatId = update.getCallbackQuery().getMessage().getChatId();
         int choiceId = Integer.parseInt(response.split("/")[2].split("_")[1]);
 
-        UserChoice userChoice = UsersChoicesCache.getOrCreateUserChoice(chatId);
+        UserChoice userChoice = usersChoicesCache.getOrCreateUserChoice(chatId);
         userChoice.addFilmChoice(choiceId);
 
         SendMessage answer = new SendMessage();

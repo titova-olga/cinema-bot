@@ -1,23 +1,25 @@
 package com.java_school.cinemabot.telegram.cache;
 
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 
-
+@Component
 public class UsersChoicesCache {
-    private final static Map<Long, UserChoice> usersChoicesMap = new HashMap<>();
+    private final Map<Long, UserChoice> usersChoicesMap = new HashMap<>();
 
-    public static UserChoice getOrCreateUserChoice(long chatId) {
+    public UserChoice getOrCreateUserChoice(long chatId) {
         if (!usersChoicesMap.containsKey(chatId)) {
             usersChoicesMap.put(chatId, new UserChoice());
         }
         return usersChoicesMap.get(chatId);
     }
 
-    public static UserChoice getUserChoice(long chatId){
+    public UserChoice getUserChoice(long chatId){
         return usersChoicesMap.get(chatId);
     }
 
-    public static void removeInfoAboutUserChoices(long chatId) {
+    public void removeInfoAboutUserChoices(long chatId) {
         usersChoicesMap.remove(chatId);
     }
 }
