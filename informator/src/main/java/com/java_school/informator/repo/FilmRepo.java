@@ -1,0 +1,11 @@
+package com.java_school.informator.repo;
+
+import com.java_school.informator.model.Film;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+
+public interface FilmRepo extends JpaRepository<Film, Integer> {
+    List<Film> findFilmsByGenre(String genre);
+    Film findFilmByName(String name);
+}
