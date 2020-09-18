@@ -10,4 +10,14 @@
             <heap unit="kB">10</heap>
         </resources>
     </cache>
+    <cache alias="allCinemasCache">
+        <key-type>org.springframework.cache.interceptor.SimpleKey</key-type>
+        <value-type>java.util.List</value-type>
+        <expiry>
+            <ttl unit="minutes">5</ttl>
+        </expiry>
+        <resources>
+            <heap unit="kB">10</heap>
+        </resources>
+    </cache>
 </config>
