@@ -18,7 +18,7 @@ public class CalendarDayMessageHandler implements MessageHandler {
     private UsersChoicesCache usersChoicesCache;
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         SendMessage answer = new SendMessage();
 
         String[] response = update.getCallbackQuery().getData().split(" ");

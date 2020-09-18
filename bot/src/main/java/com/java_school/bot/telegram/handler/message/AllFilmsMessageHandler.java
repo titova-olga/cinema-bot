@@ -21,7 +21,7 @@ public class AllFilmsMessageHandler implements MessageHandler {
     private RestTemplate restTemplate;
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         String filmsAnswer = "";
         Film[] filmsResponse = restTemplate.getForObject(RestUrls.FILMS, Film[].class);
         if(filmsResponse != null){

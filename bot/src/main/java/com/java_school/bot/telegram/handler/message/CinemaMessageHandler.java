@@ -22,7 +22,7 @@ public class CinemaMessageHandler implements MessageHandler {
     private RestTemplate restTemplate;
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         String cinemaAnswer = "";
         int cinemaId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
         Cinema cinema = restTemplate.getForObject(RestUrls.CINEMAS + "/" + cinemaId, Cinema.class);

@@ -14,7 +14,7 @@ import java.util.List;
 public class StartMessageHandler implements MessageHandler {
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         SendMessage answer = new SendMessage();
         answer.setText("Выбери из меню");
         answer.setReplyMarkup(createMenuKeyboard());

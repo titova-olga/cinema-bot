@@ -20,7 +20,8 @@ public interface SessionRepo extends JpaRepository<Session, Integer> {
     @Query("SELECT s FROM Session s WHERE " +
             "(COALESCE(:films, null) is null or s.film.id IN :films ) AND " +
             "(COALESCE(:cinemas, null) is null or s.cinema.id IN :cinemas ) AND " +
-            "(COALESCE(:dates, null) is null  or s.date in :dates) ")
+            "(COALESCE(:dates, null) is null  or s.date in :dates) " +
+            "order by s.date, s.cinema.name, s.film.name, s.time")
     List<Session> findSessions(
             @Param("films")List<Integer> films,
             @Param("cinemas")List<Integer> cinemas,

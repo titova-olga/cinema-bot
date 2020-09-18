@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 public class DefaultMessageHandler implements MessageHandler {
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         SendMessage answer = new SendMessage();
         answer.setText("Я не распознал твою команду :(");
         return answer;

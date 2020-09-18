@@ -14,7 +14,7 @@ public class ChoseDayMessageHandler implements MessageHandler {
     private CalendarCreator calendarCreator;
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         SendMessage answer = new SendMessage();
         answer.setText("Выберите день:");
         answer.setReplyMarkup(calendarCreator.createCalendar(LocalDate.now()));
