@@ -5,6 +5,7 @@ import com.java_school.informator.repo.CinemaNetworkRepo;
 import com.java_school.informator.repo.CinemaRepo;
 import com.java_school.informator.services.database.DatabaseCinemaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -30,6 +31,7 @@ public class DatabaseCinemaServiceImpl implements DatabaseCinemaService {
     }
 
     @Override
+    @Cacheable(value = "allCinemasCache")
     public List<Cinema> getAllCinemas() {
         return cinemaRepo.findAll();
     }
