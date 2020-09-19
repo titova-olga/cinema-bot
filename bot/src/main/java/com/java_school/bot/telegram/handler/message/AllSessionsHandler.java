@@ -1,6 +1,7 @@
 package com.java_school.bot.telegram.handler.message;
 
 import com.java_school.bot.constants.RestUrls;
+import com.java_school.bot.dto.ClearUserChoiceDTO;
 import com.java_school.bot.model.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -50,7 +51,7 @@ public class AllSessionsHandler implements MessageHandler {
     }
 
     private void clearUserChoice(long chatId) {
-        restTemplate.delete(RestUrls.USER_CHOICE + "?chatId=" + chatId);
+        restTemplate.postForLocation(RestUrls.USER_CHOICE, new ClearUserChoiceDTO(chatId));
     }
 
     private SendMessage answerUserChoiceAbsent() {

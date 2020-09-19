@@ -1,6 +1,7 @@
 package com.java_school.informator.controllers;
 
 import com.java_school.informator.dto.CinemaUserChoiceDTO;
+import com.java_school.informator.dto.ClearUserChoiceDTO;
 import com.java_school.informator.dto.DateUserChoiceDTO;
 import com.java_school.informator.dto.FilmUserChoiceDTO;
 import com.java_school.informator.users_choices_cache.UserChoice;
@@ -20,24 +21,21 @@ public class UserChoiceController {
 
     @PostMapping("/film")
     public void saveUserFilmChoice(@RequestBody FilmUserChoiceDTO filmUserChoiceDTO){
-        UserChoice userChoice = usersChoicesCache.getOrCreateUserChoice(filmUserChoiceDTO.getChatId());
-        userChoice.addFilmChoice(filmUserChoiceDTO.getFilmId());
+        usersChoicesCache.addFilmChoice(filmUserChoiceDTO.getChatId(), filmUserChoiceDTO.getFilmId());
     }
 
     @PostMapping("/date")
     public void saveUserDataChoice(@RequestBody DateUserChoiceDTO dateUserChoiceDTO){
-        UserChoice userChoice = usersChoicesCache.getOrCreateUserChoice(dateUserChoiceDTO.getChatId());
-        userChoice.addDateChoice(dateUserChoiceDTO.getDate());
+        usersChoicesCache.addDateChoice(dateUserChoiceDTO.getChatId(), dateUserChoiceDTO.getDate());
     }
 
     @PostMapping("/cinema")
     public void saveUserCinemaChoice(@RequestBody CinemaUserChoiceDTO cinemaUserChoiceDTO){
-        UserChoice userChoice = usersChoicesCache.getOrCreateUserChoice(cinemaUserChoiceDTO.getChatId());
-        userChoice.addCinemaChoice(cinemaUserChoiceDTO.getCinemaId());
+        usersChoicesCache.addCinemaChoice(cinemaUserChoiceDTO.getChatId(), cinemaUserChoiceDTO.getCinemaId());
     }
 
-    @DeleteMapping
-    public void deleteUserChoice(@RequestParam long chatId) {
-        usersChoicesCache.removeInfoAboutUserChoices(chatId);
+    @PostMapping // todo delete mapping
+    public void deleteUserChoice(@RequestBody ClearUserChoiceDTO clearUserChoiceDTO) {
+        usersChoicesCache.removeInfoAboutUserChoices(clearUserChoiceDTO.getChatId());
     }
 }
