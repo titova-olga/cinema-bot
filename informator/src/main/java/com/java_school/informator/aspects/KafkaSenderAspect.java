@@ -33,7 +33,7 @@ public class KafkaSenderAspect {
         if(arg instanceof UserChoiceDTO) {
             //UserChoiceDTO userChoiceDTO = (UserChoiceDTO) arg;
             //long chatId = userChoiceDTO.getChatId();
-            restTemplate.postForLocation(RestUrls.USER_CHOICE, arg);
+            restTemplate.postForLocation(RestUrls.USER_CHOICE, arg.toString());
         }
         jp.proceed();
     }
