@@ -1,4 +1,4 @@
-package com.java_school.bot.telegram.handler.calendar;
+package com.java_school.bot.telegram.handlers.calendar;
 
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 

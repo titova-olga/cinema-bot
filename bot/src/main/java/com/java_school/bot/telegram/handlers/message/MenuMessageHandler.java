@@ -1,4 +1,4 @@
-package com.java_school.bot.telegram.handler.message;
+package com.java_school.bot.telegram.handlers.message;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

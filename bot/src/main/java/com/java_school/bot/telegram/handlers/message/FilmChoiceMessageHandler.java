@@ -1,4 +1,4 @@
-package com.java_school.bot.telegram.handler.message;
+package com.java_school.bot.telegram.handlers.message;
 
 import com.java_school.bot.constants.RestUrls;
 import com.java_school.bot.dto.FilmUserChoiceDTO;
@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class FilmChoiceMessageHandler implements MessageHandler {

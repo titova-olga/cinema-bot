@@ -1,4 +1,4 @@
-package com.java_school.bot.telegram.handler.message;
+package com.java_school.bot.telegram.handlers.message;
 
 import com.java_school.bot.constants.RestUrls;
 import com.java_school.bot.model.Cinema;

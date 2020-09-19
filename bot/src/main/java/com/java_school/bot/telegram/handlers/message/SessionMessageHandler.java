@@ -1,7 +1,6 @@
-package com.java_school.bot.telegram.handler.message;
+package com.java_school.bot.telegram.handlers.message;
 
 import com.java_school.bot.constants.RestUrls;
-import com.java_school.bot.model.Film;
 import com.java_school.bot.model.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;

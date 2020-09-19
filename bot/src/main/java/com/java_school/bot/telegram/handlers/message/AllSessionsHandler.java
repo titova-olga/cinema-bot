@@ -1,6 +1,7 @@
-package com.java_school.bot.telegram.handler.message;
+package com.java_school.bot.telegram.handlers.message;
 
 import com.java_school.bot.constants.RestUrls;
+import com.java_school.bot.model.Film;
 import com.java_school.bot.model.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -32,9 +33,9 @@ public class AllSessionsHandler implements MessageHandler {
         Long chatId = update.getMessage().getChatId();
 
         Session[] sessionsResponse = getSessionsByUserChoice(chatId);
-        clearUserChoice(chatId);
 
-        if(sessionsResponse != null){
+        if(sessionsResponse != null) {
+            clearUserChoice(chatId);
             List<Session> sessions = Arrays.asList(sessionsResponse);
             if (sessions.size() == 0) {
                 return answerSessionsByChoiceAbsent();
@@ -46,7 +47,12 @@ public class AllSessionsHandler implements MessageHandler {
     }
 
     private Session[] getSessionsByUserChoice(long chatId) {
-        return restTemplate.getForObject(RestUrls.SESSIONS + "?chatId=" + chatId, Session[].class);
+        try {
+            return restTemplate.getForObject(RestUrls.SESSIONS + "?chatId=" + chatId, Session[].class);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
     }
 
     private void clearUserChoice(long chatId) {
@@ -83,27 +89,40 @@ public class AllSessionsHandler implements MessageHandler {
                 filmName = null;
                 cinemaName = null;
                 date = curDate;
-                sessionsAnswer.append("\n" + "<b>"
-                        + date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
-                        + "</b>" + "\n");
+                sessionsAnswer.append("\n<b>")
+                        .append(date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)))
+                        .append("</b>\n");
             }
 
             String curCinemaName = session.getCinema().getName();
             if (!curCinemaName.equals(cinemaName)) {
                 filmName = null;
                 cinemaName = curCinemaName;
-                sessionsAnswer.append("\n" + Stickers.CINEMA + "<b><i>" + cinemaName + "</i></b>" + "\n");
+                sessionsAnswer.append("\n")
+                        .append(Stickers.CINEMA)
+                        .append("<b><i>")
+                        .append(cinemaName)
+                        .append("</i></b>\n");
             }
 
             String curFilmName = session.getFilm().getName();
             if (!curFilmName.equals(filmName)) {
                 filmName = curFilmName;
-                sessionsAnswer.append("\n" + Stickers.FILM + "<b><i>" + filmName + "</i></b>" + "\n\n");
+                sessionsAnswer.append("\n")
+                        .append(Stickers.FILM)
+                        .append("<b><i>")
+                        .append(filmName)
+                        .append("</i></b>\n\n");
             }
 
-            sessionsAnswer.append("- " + session.getTime() + " "
-                    + Stickers.MONEY.getCode() + session.getPrice()
-                    + " /session_" + session.getId() + "\n");
+            sessionsAnswer.append("- ")
+                    .append(session.getTime())
+                    .append(" ")
+                    .append(Stickers.MONEY.getCode())
+                    .append(session.getPrice())
+                    .append(" /session_")
+                    .append(session.getId())
+                    .append("\n");
         }
 
         String res = sessionsAnswer.toString();

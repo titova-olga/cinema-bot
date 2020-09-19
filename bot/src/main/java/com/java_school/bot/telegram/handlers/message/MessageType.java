@@ -1,4 +1,4 @@
-package com.java_school.bot.telegram.handler.message;
+package com.java_school.bot.telegram.handlers.message;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,6 +1,6 @@
-package com.java_school.bot.telegram.handler.message;
+package com.java_school.bot.telegram.handlers.message;
 
-import com.java_school.bot.telegram.handler.calendar.CalendarCreator;
+import com.java_school.bot.telegram.handlers.calendar.CalendarCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,9 +15,11 @@ public class ChoseDayMessageHandler implements MessageHandler {
 
     @Override
     public SendMessage generateAnswer(Update update) {
+
         SendMessage answer = new SendMessage();
         answer.setText("Выберите день:");
         answer.setReplyMarkup(calendarCreator.createCalendar(LocalDate.now()));
+
         return answer;
     }
 

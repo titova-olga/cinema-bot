@@ -1,10 +1,10 @@
-package com.java_school.bot.telegram.handler.calendar;
+package com.java_school.bot.telegram.handlers.calendar;
 
 import com.java_school.bot.constants.RestUrls;
 import com.java_school.bot.dto.DateUserChoiceDTO;
-import com.java_school.bot.telegram.handler.message.MessageHandler;
-import com.java_school.bot.telegram.handler.message.MessageType;
-import com.java_school.bot.telegram.handler.message.Stickers;
+import com.java_school.bot.telegram.handlers.message.MessageHandler;
+import com.java_school.bot.telegram.handlers.message.MessageType;
+import com.java_school.bot.telegram.handlers.message.Stickers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 @Component
 public class CalendarDayMessageHandler implements MessageHandler {
