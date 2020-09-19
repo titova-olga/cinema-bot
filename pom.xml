@@ -15,6 +15,7 @@
         <module>discovery-service</module>
         <module>informator</module>
         <module>scheduler</module>
+        <module>apache-kafka-service</module>
     </modules>
 
     <parent>
