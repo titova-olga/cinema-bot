@@ -6,6 +6,8 @@ import com.java_school.apachekafkaservice.services.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/userChoice")
 public class KafkaController {
@@ -20,4 +22,10 @@ public class KafkaController {
     public void addUserChoiceToKafka(@RequestBody UserChoiceDTO userChoiceDTO) {
         kafkaProducer.sendMessage(userChoiceDTO);
     }
+
+    @GetMapping("/all")
+    public List<String> getAllMessages() {
+        return consumer.getAllMessages();
+    }
+
 }
