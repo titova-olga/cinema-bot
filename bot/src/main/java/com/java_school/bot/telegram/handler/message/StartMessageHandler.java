@@ -16,8 +16,11 @@ public class StartMessageHandler implements MessageHandler {
     @Override
     public SendMessage generateAnswer(Update update) {
         SendMessage answer = new SendMessage();
-        answer.setText("Выбери из меню");
-        answer.setReplyMarkup(createMenuKeyboard());
+        StringBuilder answerText = new StringBuilder("Я - бот кинотеатров. Могу помочь тебе найти билеты в кино.\n");
+        answerText.append("В меню есть несколько кнопок, которые помогут тебе подобрать сеансы.\n");
+        answerText.append("Выбирай фильмы, кинотеатры и даты, а по кнопке 'Сеансы' получи информацию о расписании. \n");
+        answer.setText(answerText.toString());
+        answer.setReplyMarkup(MenuMessageHandler.createMenuKeyboard());
         return answer;
     }
 
@@ -26,25 +29,4 @@ public class StartMessageHandler implements MessageHandler {
         return MessageType.START;
     }
 
-    private ReplyKeyboardMarkup createMenuKeyboard() {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
-
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow keyboardRow1 = new KeyboardRow();
-        keyboardRow1.add(new KeyboardButton("Фильмы"));
-        keyboardRow1.add(new KeyboardButton("Кинотеатры"));
-        keyboardRow1.add(new KeyboardButton("Даты"));
-
-        KeyboardRow keyboardRow2 = new KeyboardRow();
-        keyboardRow2.add(new KeyboardButton("Сеансы"));
-
-        keyboard.add(keyboardRow1);
-        keyboard.add(keyboardRow2);
-
-        replyKeyboardMarkup.setKeyboard(keyboard);
-        return replyKeyboardMarkup;
-    }
 }

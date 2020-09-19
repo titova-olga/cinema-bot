@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum MessageType {
 
-    START("/start"), // message
+    START("/start"), //
+    MENU("/menu"),
+    HELP("/help"),
 
     ALL_FILMS("Фильмы"), // message
     FILM("/film_"), // message
