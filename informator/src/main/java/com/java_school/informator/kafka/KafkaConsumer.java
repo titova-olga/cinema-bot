@@ -11,13 +11,15 @@ import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerTimeoutException;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 @Component
+@Getter
 public class KafkaConsumer {
-    private final ConsumerConnector consumer;
-    private final String topic = "usersChoices";
-    private final String group_id = "group_id";
+    private final ConsumerConnector consumerConnector;
+    private final String topic = "usersChoices2";
+    private final String group_id = "group_id2";
     private final String zookeeperConnect = "localhost:2181";
 
     public KafkaConsumer() {
@@ -31,28 +33,6 @@ public class KafkaConsumer {
         props.put("auto.commit.enable", "false");
         props.put("consumer.timeout.ms", "5000");
 
-        this.consumer = Consumer.createJavaConsumerConnector(new ConsumerConfig(props));
-    }
-
-    public void getData() {
-        List<String> msgs = new ArrayList<>();
-        Map<String, Integer> topicMap = new HashMap<>();
-
-        // Define single thread for topic
-        topicMap.put(topic, 1);
-        try {
-            Map<String, List<KafkaStream<byte[], byte[]>>> listMap = consumer.createMessageStreams(topicMap);
-            List<KafkaStream<byte[], byte[]>> kafkaStreams = listMap.get(topic);
-
-            // Collect the messages.
-            kafkaStreams.forEach(ks -> ks.forEach(mam -> msgs.add(new String(mam.message()))));
-
-        } catch (ConsumerTimeoutException exception) {
-            msgs.forEach(System.out::println);
-        } finally {
-            if (consumer != null) {
-                consumer.shutdown();
-            }
-        }
+        this.consumerConnector = Consumer.createJavaConsumerConnector(new ConsumerConfig(props));
     }
 }
