@@ -40,8 +40,12 @@ public class MenuMessageHandler implements MessageHandler {
         KeyboardRow keyboardRow2 = new KeyboardRow();
         keyboardRow2.add(new KeyboardButton("Сеансы"));
 
+        KeyboardRow keyboardRow3 = new KeyboardRow();
+        keyboardRow3.add(new KeyboardButton("Очистить выбор"));
+
         keyboard.add(keyboardRow1);
         keyboard.add(keyboardRow2);
+        keyboard.add(keyboardRow3);
 
         replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;

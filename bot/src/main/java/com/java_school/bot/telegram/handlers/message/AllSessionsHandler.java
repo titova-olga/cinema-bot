@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,8 +35,6 @@ public class AllSessionsHandler implements MessageHandler {
     @LoadBalanced
     private RestTemplate restTemplate;
 
-    //private List<Session> sessions;
-
     @Override
     public boolean isGeneratingNewMessage(Update update) {
         String messageText = update.hasMessage()
@@ -47,18 +46,20 @@ public class AllSessionsHandler implements MessageHandler {
 
     @Override
     public EditMessageText editMessage(Update update) {
-        long chatId = update.hasMessage()
-                ? update.getMessage().getChatId()
-                : update.getCallbackQuery().getMessage().getChatId();
-        String messageText = update.hasMessage()
-                ? update.getMessage().getText()
-                : update.getCallbackQuery().getData();
-        String[] s = messageText.split(" ");
+        long chatId = update.getCallbackQuery().getMessage().getChatId();
+        String messageText = update.getCallbackQuery().getData();
+        UserChoice userChoice = usersChoicesCache.getUserChoice(chatId);
 
         Session[] sessionsResponse = getSessionsByUserChoice(chatId);
         List<Session> sessions = Arrays.asList(sessionsResponse);
 
-        return editSessionsByChoice(sessions, parseInt(s[1]));
+        String[] s = messageText.split(" ");
+        String[] s = messageText.split(" ");
+        Message message = generateSessionsByChoice(sessions, chatId, parseInt(s[1]));
+        return new EditMessageText()
+                .setText(message.getMessage())
+                .setReplyMarkup(message.getKeyboard())
+                .enableHtml(true);
     }
 
     @Override
@@ -68,14 +69,11 @@ public class AllSessionsHandler implements MessageHandler {
 
     @Override
     public SendMessage generateMessage(Update update) {
-        long chatId = update.hasMessage()
-                ? update.getMessage().getChatId()
-                : update.getCallbackQuery().getMessage().getChatId();
-        String messageText = update.hasMessage()
-                ? update.getMessage().getText()
-                : update.getCallbackQuery().getData();
+        long chatId = update.getMessage().getChatId();
+
 
         Session[] sessionsResponse = getSessionsByUserChoice(chatId);
+        List<Session> sessions = Arrays.asList(sessionsResponse);
 
         if(sessionsResponse != null){
             List<Session> sessions = Arrays.asList(sessionsResponse);
@@ -83,13 +81,11 @@ public class AllSessionsHandler implements MessageHandler {
                 return answerSessionsByChoiceAbsent();
             }
 
-            String[] s = messageText.split(" ");
-            if (s.length == 1) {
-                sessionsPaginationCache.addNextSessionInd(0);
-                return generateSessionsByChoice(sessions, 0);
-            }
-
-            return generateSessionsByChoice(sessions, parseInt(s[1]));
+            Message message = generateSessionsByChoice(sessions, chatId,0);
+            return new SendMessage()
+                    .setText(message.getMessage())
+                    .setReplyMarkup(message.getKeyboard())
+                    .enableHtml(true);
         }else{
             return answerUserChoiceAbsent();
         }
@@ -120,49 +116,29 @@ public class AllSessionsHandler implements MessageHandler {
         return answer;
     }
 
-    private SendMessage generateSessionsByChoice(List<Session> sessions,
+    private Message generateSessionsByChoice(List<Session> sessions,
+                                            long chatId,
                                             int curPage) {
-        int curSessionInd = sessionsPaginationCache.getSessionInd(curPage);
-        int nextSessionInd = getNextSessionIndex(sessions, curPage);
+        int curSessionInd = sessionsPaginationCache.getSessionInd(chatId, curPage);
+        int nextSessionInd = getNextSessionIndex(sessions, chatId, curPage);
 
-        SendMessage answer = new SendMessage();
-        answer.setText(generateMessage(sessions, curSessionInd, nextSessionInd));
-        answer.enableHtml(true);
+        Message message = new Message();
+        message.setMessage(generateMessage(sessions, curSessionInd, nextSessionInd));
 
         boolean nextButton = nextSessionInd < sessions.size();
         if (curSessionInd > 0 || nextButton) {
-            answer.setReplyMarkup(paginationCreator.createPagination(getMessageType(),
+            message.setKeyboard(paginationCreator.createPagination(getMessageType(),
                                                         curPage,
                                                         nextButton));
         }
-
-        return answer;
+        return message;
     }
 
-    private EditMessageText editSessionsByChoice(List<Session> sessions,
-                                                 int curPage) {
-        int curSessionInd = sessionsPaginationCache.getSessionInd(curPage);
-        int nextSessionInd = getNextSessionIndex(sessions, curPage);
-
-        EditMessageText answer = new EditMessageText();
-        answer.setText(generateMessage(sessions, curSessionInd, nextSessionInd));
-        answer.enableHtml(true);
-
-        boolean nextButton = nextSessionInd < sessions.size();
-        if (curSessionInd > 0 || nextButton) {
-            answer.setReplyMarkup(paginationCreator.createPagination(getMessageType(),
-                    curPage,
-                    nextButton));
-        }
-
-        return answer;
-    }
-
-    private int getNextSessionIndex(List<Session> sessions, int curPage) {
-        int curSessionInd = sessionsPaginationCache.getSessionInd(curPage);
+    private int getNextSessionIndex(List<Session> sessions, long chatId, int curPage) {
+        int curSessionInd = sessionsPaginationCache.getSessionInd(chatId, curPage);
         int nextSessionInd;
-        if (sessionsPaginationCache.hasSessionInd(curPage + 1)) {
-            nextSessionInd = sessionsPaginationCache.getSessionInd(curPage + 1);
+        if (sessionsPaginationCache.hasSessionInd(chatId, curPage + 1)) {
+            nextSessionInd = sessionsPaginationCache.getSessionInd(chatId, curPage + 1);
         } else {
             nextSessionInd = curSessionInd;
             int lines = 0;
@@ -177,7 +153,7 @@ public class AllSessionsHandler implements MessageHandler {
                 nextSessionInd += newNext;
                 lines += 3;
             }
-            sessionsPaginationCache.addNextSessionInd(nextSessionInd);
+            sessionsPaginationCache.addNextSessionInd(chatId, nextSessionInd);
         }
         return nextSessionInd;
     }
@@ -237,6 +213,12 @@ public class AllSessionsHandler implements MessageHandler {
                     .append("\n");
         }
         return sessionsAnswer.toString();
+    }
+
+    @Data
+    private class Message {
+        private String message;
+        private InlineKeyboardMarkup keyboard;
     }
 
 

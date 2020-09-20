@@ -1,4 +1,4 @@
-package com.java_school.bot.telegram.handlers.message;
+package com.java_school.bot.telegram.handler.message;
 
 import lombok.RequiredArgsConstructor;
 
@@ -8,6 +8,8 @@ public enum MessageType {
     START("/start"), //
     MENU("/menu"),
     HELP("/help"),
+
+    CLEAR_SELECTION("Очистить выбор"), // message
 
     ALL_FILMS("Фильмы"), // message
     FILM("/film_"), // message
