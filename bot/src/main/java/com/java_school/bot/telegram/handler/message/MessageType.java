@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 public enum MessageType {
 
     START("/start"), // message
+    CLEAR_SELECTION("Очистить выбор"), // message
 
     ALL_FILMS("Фильмы"), // message
     FILM("/film_"), // message
