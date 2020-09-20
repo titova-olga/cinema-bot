@@ -1,7 +1,8 @@
-package com.java_school.bot.telegram.handler.message;
+package com.java_school.bot.telegram.handlers.message;
 
 import com.java_school.bot.constants.RestUrls;
 import com.java_school.bot.dto.CinemaUserChoiceDTO;
+import com.java_school.bot.model.Film;
 import com.java_school.bot.telegram.handlers.message.MessageHandler;
 import com.java_school.bot.telegram.handlers.message.MessageType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,23 @@ public class CinemaChoiceMessageHandler implements MessageHandler {
 
     @Override
     public SendMessage generateMessage(Update update) {
-        String response = update.getCallbackQuery().getData();//.split("/")[2];
+        String response = update.getCallbackQuery().getData();
         Long chatId = update.getCallbackQuery().getMessage().getChatId();
         int choiceId = Integer.parseInt(response.split("/")[2].split("_")[1]);
 
-        restTemplate.postForLocation(RestUrls.USER_CHOICE + "/cinema",
-                new CinemaUserChoiceDTO(chatId, choiceId));
+        sendUserChoiceCinema(chatId, choiceId);
 
         SendMessage answer = new SendMessage();
         answer.setText("Продолжай дальше или посмотри сеансы, основанные на твоем выборе! ");
         return answer;
+    }
+
+    private void sendUserChoiceCinema(long chatId, int filmId) {
+        try {
+            restTemplate.postForLocation(RestUrls.USER_CHOICE_CINEMA,
+                    new CinemaUserChoiceDTO(chatId, filmId));
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.java_school.bot.telegram.handlers.message;
 
 import com.java_school.bot.constants.RestUrls;
+import com.java_school.bot.model.Cinema;
 import com.java_school.bot.model.Film;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -24,8 +25,10 @@ public class FilmMessageHandler implements MessageHandler {
     @Override
     public SendMessage generateMessage(Update update) {
         String filmAnswer = "";
+
         int filmId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
-        Film film = restTemplate.getForObject(RestUrls.FILMS + "/" + filmId, Film.class);
+        Film film = getFilm(filmId);
+
         if(film != null){
             filmAnswer = Stickers.FILM + "<b><i>" + film.getName() + "</i></b>" + Stickers.FILM + "\n\n"
                     + "<b>Жанр:</b> " + film.getGenre() + "\n"
@@ -33,6 +36,7 @@ public class FilmMessageHandler implements MessageHandler {
                     + "<b>Возрастное ограничение:</b> " + film.getMinAge() + "+\n"
                     + "<b>Описание:</b> " + film.getDescription();
         }
+
         SendMessage answer = new SendMessage();
         answer.setText(filmAnswer);
         answer.enableHtml(true);
@@ -45,12 +49,20 @@ public class FilmMessageHandler implements MessageHandler {
         return MessageType.FILM;
     }
 
+    private Film getFilm(int filmId) {
+        try {
+            return restTemplate.getForObject(RestUrls.FILMS + "/" + filmId, Film.class);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
     private InlineKeyboardMarkup generateKeyBoard(Update update){
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         List<InlineKeyboardButton> firstRow = new ArrayList<>();
         firstRow.add(new InlineKeyboardButton().setText("Хочу смотреть!").setCallbackData("/answer" + update.getMessage().getText()));
-        //firstRow.add(new InlineKeyboardButton().setText("Дата").setCallbackData("/reject"));
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         rowList.add(firstRow);

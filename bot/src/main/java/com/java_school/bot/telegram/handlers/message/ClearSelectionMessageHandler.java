@@ -40,7 +40,7 @@ public class ClearSelectionMessageHandler implements MessageHandler {
     }
 
     private void clearUserChoice(long chatId) {
-        restTemplate.postForLocation(RestUrls.USER_CHOICE, new ClearUserChoiceDTO(chatId));
+        restTemplate.postForLocation(RestUrls.USER_CHOICE_CLEAR, new ClearUserChoiceDTO(chatId));
     }
 }
 

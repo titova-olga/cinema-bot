@@ -1,6 +1,7 @@
 package com.java_school.bot.telegram.handlers.message;
 
 import com.java_school.bot.constants.RestUrls;
+import com.java_school.bot.dto.CinemaUserChoiceDTO;
 import com.java_school.bot.model.Cinema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -25,11 +26,14 @@ public class CinemaMessageHandler implements MessageHandler {
     public SendMessage generateMessage(Update update) {
         String cinemaAnswer = "";
         int cinemaId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
-        Cinema cinema = restTemplate.getForObject(RestUrls.CINEMAS + "/" + cinemaId, Cinema.class);
+
+        Cinema cinema = getCinema(cinemaId);
+
         if(cinema != null){
             cinemaAnswer = Stickers.CINEMA + "<b><i>" + cinema.getName() + "</i></b>" + "\n"
                     + cinema.getAddress();
         }
+
         SendMessage answer = new SendMessage();
         answer.setText(cinemaAnswer);
         answer.enableHtml(true);
@@ -42,12 +46,22 @@ public class CinemaMessageHandler implements MessageHandler {
         return MessageType.CINEMA;
     }
 
+    private Cinema getCinema(int cinemaId) {
+        try {
+            return restTemplate.getForObject(RestUrls.CINEMAS + "/" + cinemaId, Cinema.class);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
     private InlineKeyboardMarkup generateKeyBoard(Update update){
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         List<InlineKeyboardButton> firstRow = new ArrayList<>();
-        firstRow.add(new InlineKeyboardButton().setText("Подходит, пойду туда!").setCallbackData("/answer" + update.getMessage().getText()));
-        //firstRow.add(new InlineKeyboardButton().setText("Дата").setCallbackData("/reject"));
+        firstRow.add(new InlineKeyboardButton()
+                .setText("Подходит, пойду туда!")
+                .setCallbackData("/answer" + update.getMessage().getText()));
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         rowList.add(firstRow);

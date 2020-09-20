@@ -2,6 +2,7 @@ package com.java_school.bot.telegram.handlers.message;
 
 import com.java_school.bot.constants.RestUrls;
 import com.java_school.bot.dto.ClearUserChoiceDTO;
+import com.java_school.bot.model.Film;
 import com.java_school.bot.model.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -20,12 +21,15 @@ public class SessionMessageHandler implements MessageHandler {
     @Override
     public SendMessage generateMessage(Update update) {
         String sessionAnswer = "";
+
         int sessionId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
-        Session session = restTemplate.getForObject(RestUrls.SESSIONS + "/" + sessionId, Session.class);
+        Session session = getSession(sessionId);
+
         if(session != null){
             sessionAnswer = "Ура! Держи ссылку на покупку билетов!\n" + session.getBuyReference();
         }
-        Long chatId = update.getMessage().getChatId();
+
+        long chatId = update.getMessage().getChatId();
         clearUserChoice(chatId);
         SendMessage answer = new SendMessage();
         answer.setText(sessionAnswer);
@@ -33,7 +37,16 @@ public class SessionMessageHandler implements MessageHandler {
     }
 
     private void clearUserChoice(long chatId) {
-        restTemplate.postForLocation(RestUrls.USER_CHOICE, new ClearUserChoiceDTO(chatId));
+        restTemplate.postForLocation(RestUrls.USER_CHOICE_CLEAR, new ClearUserChoiceDTO(chatId));
+    }
+
+    private Session getSession(int sessionId) {
+        try {
+            return restTemplate.getForObject(RestUrls.SESSIONS + "/" + sessionId, Session.class);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
     }
 
     @Override

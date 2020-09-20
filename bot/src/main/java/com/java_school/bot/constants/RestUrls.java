@@ -5,5 +5,8 @@ public interface RestUrls {
     String FILMS = PREFIX + "/films";
     String CINEMAS = PREFIX + "/cinemas";
     String SESSIONS = PREFIX + "/sessions";
-    String USER_CHOICE = PREFIX + "/userChoice";
+    String USER_CHOICE_FILM = PREFIX + "/userChoice/film";
+    String USER_CHOICE_CINEMA = PREFIX + "/userChoice/cinema";
+    String USER_CHOICE_CLEAR = PREFIX + "/userChoice";
+    String USER_CHOICE_DATE = PREFIX + "/userChoice/date";
 }

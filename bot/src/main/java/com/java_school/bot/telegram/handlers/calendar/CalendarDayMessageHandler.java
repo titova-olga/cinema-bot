@@ -37,7 +37,7 @@ public class CalendarDayMessageHandler implements MessageHandler {
         }
 
         Long chatId = update.getCallbackQuery().getMessage().getChatId();
-        restTemplate.postForLocation(RestUrls.USER_CHOICE + "/date",
+        restTemplate.postForLocation(RestUrls.USER_CHOICE_DATE,
                 new DateUserChoiceDTO(chatId, chosenDate));
 
 
