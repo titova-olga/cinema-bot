@@ -4,6 +4,7 @@ import com.java_school.bot.telegram.handlers.message.MessageHandler;
 import com.java_school.bot.telegram.handlers.message.MessageType;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.HashMap;
@@ -21,20 +22,38 @@ public class MessageDistributor{
         }
     }
 
-    public SendMessage generateAnswer(Update update){
-        String messageText;
-        long chatId;
-        if(update.hasMessage()) {
-            messageText = update.getMessage().getText();
-            chatId = update.getMessage().getChatId();
-        } else {
-            messageText = update.getCallbackQuery().getData();
-            chatId = update.getCallbackQuery().getMessage().getChatId();
-        }
-        MessageType messageType = MessageType.getMessageType(messageText);
-        MessageHandler messageHandler = messageHandlerMap.get(messageType);
-        SendMessage answer = messageHandler.generateAnswer(update);
+    public boolean isGeneratingNewMessage(Update update) {
+        MessageHandler messageHandler = getHandler(update);
+        return messageHandler.isGeneratingNewMessage(update);
+    }
+
+    public EditMessageText editMessage(Update update) {
+        long chatId = update.hasMessage()
+                ? update.getMessage().getChatId()
+                : update.getCallbackQuery().getMessage().getChatId();
+
+        MessageHandler messageHandler = getHandler(update);
+        var answer = messageHandler.editMessage(update);
         answer.setChatId(chatId);
         return answer;
+    }
+
+    public SendMessage generateMessage(Update update) {
+        long chatId = update.hasMessage()
+                ? update.getMessage().getChatId()
+                : update.getCallbackQuery().getMessage().getChatId();
+
+        MessageHandler messageHandler = getHandler(update);
+        var answer = messageHandler.generateMessage(update);
+        answer.setChatId(chatId);
+        return answer;
+    }
+
+    private MessageHandler getHandler(Update update) {
+        String messageText = update.hasMessage()
+                ? update.getMessage().getText()
+                : update.getCallbackQuery().getData();
+        MessageType messageType = MessageType.getMessageType(messageText);
+        return messageHandlerMap.get(messageType);
     }
 }

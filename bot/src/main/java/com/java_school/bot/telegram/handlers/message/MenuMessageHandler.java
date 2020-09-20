@@ -18,7 +18,7 @@ public class MenuMessageHandler implements MessageHandler {
     }
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         SendMessage answer = new SendMessage();
         answer.setText("А вот и меню для того, чтобы тебе было удобно подобрать сеансы в кино:");
         answer.setReplyMarkup(createMenuKeyboard());

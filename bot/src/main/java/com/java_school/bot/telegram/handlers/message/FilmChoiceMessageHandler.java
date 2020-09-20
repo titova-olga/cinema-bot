@@ -22,7 +22,7 @@ public class FilmChoiceMessageHandler implements MessageHandler {
     }
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         String response = update.getCallbackQuery().getData();//.split("/")[2];
         Long chatId = update.getCallbackQuery().getMessage().getChatId();
         int choiceId = Integer.parseInt(response.split("/")[2].split("_")[1]);

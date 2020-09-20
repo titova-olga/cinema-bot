@@ -12,7 +12,7 @@ public class HelpMessageHandler implements MessageHandler {
     }
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         SendMessage answer = new SendMessage();
         StringBuilder answerText = new StringBuilder("Я - бот кинотеатров. Могу помочь тебе найти билеты в кино.\n");
         answerText.append("Напиши мне /menu или /start чтобы начать поиск.\n");

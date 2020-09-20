@@ -17,7 +17,7 @@ public class SessionMessageHandler implements MessageHandler {
     private RestTemplate restTemplate;
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         String sessionAnswer = "";
         int sessionId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
         Session session = restTemplate.getForObject(RestUrls.SESSIONS + "/" + sessionId, Session.class);

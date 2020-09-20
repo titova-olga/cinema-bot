@@ -22,7 +22,7 @@ public class AllCinemasMessageHandler implements MessageHandler {
     private RestTemplate restTemplate;
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         Cinema[] cinemasResponse = getAllCinemas();
 
         if(cinemasResponse != null) {

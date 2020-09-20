@@ -22,7 +22,7 @@ public class AllFilmsMessageHandler implements MessageHandler {
     private RestTemplate restTemplate;
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         Film[] filmsResponse = getAllFilms();
 
         if(filmsResponse != null) {

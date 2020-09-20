@@ -22,7 +22,7 @@ public class FilmMessageHandler implements MessageHandler {
     private RestTemplate restTemplate;
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         String filmAnswer = "";
         int filmId = Integer.parseInt(update.getMessage().getText().split("_")[1]);
         Film film = restTemplate.getForObject(RestUrls.FILMS + "/" + filmId, Film.class);

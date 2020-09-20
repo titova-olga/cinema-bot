@@ -22,7 +22,7 @@ public class CalendarDayMessageHandler implements MessageHandler {
     private RestTemplate restTemplate;
 
     @Override
-    public SendMessage generateAnswer(Update update) {
+    public SendMessage generateMessage(Update update) {
         SendMessage answer = new SendMessage();
 
         String[] response = update.getCallbackQuery().getData().split(" ");
