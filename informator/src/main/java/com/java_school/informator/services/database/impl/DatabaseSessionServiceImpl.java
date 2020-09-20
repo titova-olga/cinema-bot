@@ -71,14 +71,6 @@ public class DatabaseSessionServiceImpl implements DatabaseSessionService {
         if(dates.isEmpty()){
             dates.add(LocalDate.now());
         }
-
-        /*List<Date> datesTransformed = new ArrayList<>();
-        for (LocalDate localDate : dates) {
-            datesTransformed.add(java.util.Date.from(localDate.atStartOfDay()
-                    .atZone(ZoneId.systemDefault())
-                    .toInstant()));
-        }
-        datesTransformed.forEach(System.out::println);*/
         return sessionRepo.findSessions(films, cinemas, dates);
     }
 }

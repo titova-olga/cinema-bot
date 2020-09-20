@@ -1,11 +1,18 @@
 package com.java_school.informator.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
-public class CinemaUserChoiceDTO {
-    long chatId;
-    int cinemaId;
+@Getter
+@Setter
+@NoArgsConstructor
+public class CinemaUserChoiceDTO extends UserChoiceDTO {
+    private int cinemaId;
+
+    @Override
+    public String toString() {
+        return "CinemaUserChoiceDTO{" +
+                "chatId=" + super.getChatId() +
+                ",cinemaId=" + cinemaId +
+                '}';
+    }
 }

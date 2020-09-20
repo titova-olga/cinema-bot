@@ -1,13 +1,20 @@
 package com.java_school.informator.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
-@AllArgsConstructor
-public class DateUserChoiceDTO {
-    long chatId;
-    LocalDate date;
+@Getter
+@Setter
+@NoArgsConstructor
+public class DateUserChoiceDTO extends UserChoiceDTO{
+    private LocalDate date;
+
+    @Override
+    public String toString() {
+        return "DateUserChoiceDTO{" +
+                "chatId=" + super.getChatId() +
+                ",date=" + date +
+                '}';
+    }
 }
