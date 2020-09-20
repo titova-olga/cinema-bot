@@ -26,6 +26,10 @@ public class SessionsPaginationCache {
         sessionIndsList.get(chatId).add(index);
     }
 
+    public void clearSelection(long chatId) {
+        sessionIndsList.remove(chatId);
+    }
+
     private void initialize(long chatId) {
         if (!sessionIndsList.containsKey(chatId)) {
             sessionIndsList.put(chatId, new ArrayList<>());
