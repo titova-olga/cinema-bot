@@ -4,6 +4,7 @@ import com.java_school.bot.constants.RestUrls;
 import com.java_school.bot.model.Session;
 import com.java_school.bot.telegram.cache.SessionsPaginationCache;
 import com.java_school.bot.telegram.handlers.pagination.PaginationCreator;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.stereotype.Component;
@@ -48,12 +49,10 @@ public class AllSessionsHandler implements MessageHandler {
     public EditMessageText editMessage(Update update) {
         long chatId = update.getCallbackQuery().getMessage().getChatId();
         String messageText = update.getCallbackQuery().getData();
-        UserChoice userChoice = usersChoicesCache.getUserChoice(chatId);
 
         Session[] sessionsResponse = getSessionsByUserChoice(chatId);
         List<Session> sessions = Arrays.asList(sessionsResponse);
 
-        String[] s = messageText.split(" ");
         String[] s = messageText.split(" ");
         Message message = generateSessionsByChoice(sessions, chatId, parseInt(s[1]));
         return new EditMessageText()
@@ -71,9 +70,7 @@ public class AllSessionsHandler implements MessageHandler {
     public SendMessage generateMessage(Update update) {
         long chatId = update.getMessage().getChatId();
 
-
         Session[] sessionsResponse = getSessionsByUserChoice(chatId);
-        List<Session> sessions = Arrays.asList(sessionsResponse);
 
         if(sessionsResponse != null){
             List<Session> sessions = Arrays.asList(sessionsResponse);
