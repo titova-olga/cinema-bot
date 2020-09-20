@@ -34,7 +34,7 @@ public class AllSessionsHandler implements MessageHandler {
     @LoadBalanced
     private RestTemplate restTemplate;
 
-    private List<Session> sessions;
+    //private List<Session> sessions;
 
     @Override
     public boolean isGeneratingNewMessage(Update update) {
@@ -54,6 +54,10 @@ public class AllSessionsHandler implements MessageHandler {
                 ? update.getMessage().getText()
                 : update.getCallbackQuery().getData();
         String[] s = messageText.split(" ");
+
+        Session[] sessionsResponse = getSessionsByUserChoice(chatId);
+        List<Session> sessions = Arrays.asList(sessionsResponse);
+
         return editSessionsByChoice(sessions, parseInt(s[1]));
     }
 
@@ -72,10 +76,9 @@ public class AllSessionsHandler implements MessageHandler {
                 : update.getCallbackQuery().getData();
 
         Session[] sessionsResponse = getSessionsByUserChoice(chatId);
-        clearUserChoice(chatId);
 
         if(sessionsResponse != null){
-            sessions = Arrays.asList(sessionsResponse);
+            List<Session> sessions = Arrays.asList(sessionsResponse);
             if (sessions.size() == 0) {
                 return answerSessionsByChoiceAbsent();
             }
@@ -94,10 +97,6 @@ public class AllSessionsHandler implements MessageHandler {
 
     private Session[] getSessionsByUserChoice(long chatId) {
         return restTemplate.getForObject(RestUrls.SESSIONS + "?chatId=" + chatId, Session[].class);
-    }
-
-    private void clearUserChoice(long chatId) {
-        restTemplate.delete(RestUrls.USER_CHOICE + "?chatId=" + chatId);
     }
 
     private String convertListToStringWithDelimiter(List<?> list, String delimiter){

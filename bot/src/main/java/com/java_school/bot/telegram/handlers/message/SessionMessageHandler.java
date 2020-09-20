@@ -24,9 +24,15 @@ public class SessionMessageHandler implements MessageHandler {
         if(session != null){
             sessionAnswer = "Ура! Держи ссылку на покупку билетов!\n" + session.getBuyReference();
         }
+        Long chatId = update.getMessage().getChatId();
+        clearUserChoice(chatId);
         SendMessage answer = new SendMessage();
         answer.setText(sessionAnswer);
         return answer;
+    }
+
+    private void clearUserChoice(long chatId) {
+        restTemplate.delete(RestUrls.USER_CHOICE + "?chatId=" + chatId);
     }
 
     @Override

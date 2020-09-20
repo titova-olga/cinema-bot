@@ -21,7 +21,7 @@ public interface SessionRepo extends JpaRepository<Session, Integer> {
     @Query("SELECT s FROM Session s WHERE " +
             "(COALESCE(:films, null) is null or s.film.id IN :films ) AND " +
             "(COALESCE(:cinemas, null) is null or s.cinema.id IN :cinemas ) AND " +
-            "((s.date = current_date AND (s.time > current_time))" +
+            "((s.date in :dates AND s.date = current_date AND (s.time > current_time))" +
             "OR" +
             "(s.date in :dates AND s.date > current_date))" +
             "ORDER BY s.date, s.cinema.name, s.film.name, s.time ")
