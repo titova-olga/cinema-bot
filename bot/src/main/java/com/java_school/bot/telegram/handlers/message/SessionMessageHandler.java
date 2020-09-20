@@ -4,6 +4,7 @@ import com.java_school.bot.constants.RestUrls;
 import com.java_school.bot.dto.ClearUserChoiceDTO;
 import com.java_school.bot.model.Film;
 import com.java_school.bot.model.Session;
+import com.java_school.bot.telegram.cache.SessionsPaginationCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,9 @@ public class SessionMessageHandler implements MessageHandler {
     @LoadBalanced
     private RestTemplate restTemplate;
 
+    @Autowired
+    private SessionsPaginationCache sessionsPaginationCache;
+
     @Override
     public SendMessage generateMessage(Update update) {
         String sessionAnswer = "";
@@ -31,6 +35,7 @@ public class SessionMessageHandler implements MessageHandler {
 
         long chatId = update.getMessage().getChatId();
         clearUserChoice(chatId);
+        sessionsPaginationCache.clearSelection(chatId);
         SendMessage answer = new SendMessage();
         answer.setText(sessionAnswer);
         return answer;
