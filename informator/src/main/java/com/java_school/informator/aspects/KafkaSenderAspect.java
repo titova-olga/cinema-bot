@@ -1,9 +1,6 @@
 package com.java_school.informator.aspects;
 
 import com.java_school.informator.constants.RestUrls;
-import com.java_school.informator.dto.CinemaUserChoiceDTO;
-import com.java_school.informator.dto.DateUserChoiceDTO;
-import com.java_school.informator.dto.FilmUserChoiceDTO;
 import com.java_school.informator.dto.UserChoiceDTO;
 import lombok.SneakyThrows;
 import org.aspectj.lang.JoinPoint;
@@ -31,8 +28,6 @@ public class KafkaSenderAspect {
     public void beforeAddingNewUserChoice(ProceedingJoinPoint jp)  {
         Object arg = jp.getArgs()[0];
         if(arg instanceof UserChoiceDTO) {
-            //UserChoiceDTO userChoiceDTO = (UserChoiceDTO) arg;
-            //long chatId = userChoiceDTO.getChatId();
             restTemplate.postForLocation(RestUrls.USER_CHOICE, arg.toString());
         }
         jp.proceed();
